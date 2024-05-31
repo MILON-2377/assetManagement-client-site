@@ -71,6 +71,7 @@ const Navbar = () => {
         </ul>
       </div>
 
+{/*  */}
       {/* logo and name section */}
       <div>
         <a className="btn btn-ghost text-2xl">daisyUI</a>
