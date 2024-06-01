@@ -63,12 +63,23 @@ const Navbar = () => {
       {/* this title section is for larges device */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu flex items-center justify-center gap-5 menu-horizontal px-1">
-          <NavLink>
-            <li>Home</li>
-          </NavLink>
-          <NavLink to="/joinAnEmployee">
-            <li>Join as Employee</li>
-          </NavLink>
+          {user ? (
+            <>
+              <NavLink>
+                <li>Home</li>
+              </NavLink>
+              <NavLink to="/joinAnEmployee">
+                <li>Join as Employee</li>
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to="/joinAnEmployee">
+                <li>My Assets</li>
+              </NavLink>
+            </>
+          )}
+
           {/* <NavLink>
             <li>Join as Employee</li>
           </NavLink>
@@ -100,12 +111,58 @@ const Navbar = () => {
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu font-Poppins flex items-center justify-center gap-5 menu-horizontal px-1">
-          <NavLink to='/joinAnHRManager'>
-            <li>Join as HR Manager</li>
-          </NavLink>
-          <button className="btn font-Poppins bg-black text-white ">
-            LogIn
-          </button>
+          {user ? (
+            <>
+              <NavLink to="/joinAnHRManager">
+                <li>My Team</li>
+              </NavLink>
+              <NavLink to="/requestForAssets">
+                <li>Request for an Asset</li>
+              </NavLink>
+
+              {/* user profile section */}
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src={user?.photoURL}
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a className="justify-between">
+                      Profile
+                      <span className="badge">New</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a>Settings</a>
+                  </li>
+                  <li onClick={handleUsrLogOut}>
+                    <a>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <NavLink to="/joinAnHRManager">
+                <li>Join as HR Manager</li>
+              </NavLink>
+              <button className="btn font-Poppins bg-black text-white ">
+                LogIn
+              </button>
+            </>
+          )}
         </ul>
       </div>
 

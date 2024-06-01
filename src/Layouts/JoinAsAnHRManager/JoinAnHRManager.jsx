@@ -13,7 +13,8 @@ const JoinAnHRManager = () => {
   const onSubmit = (data) => {
     // console.log(data);
     const { email, password, dateOfBirth, fullName, companyLogo, companyName } = data;
-    const employeeData = { fullName, email, dateOfBirth,  companyLogo, companyName};
+    const hRManager = "Manager";
+    const employeeData = { fullName, email, dateOfBirth,  companyLogo, companyName, hRManager};
 
     userRegister(email, password)
       .then((res) => {

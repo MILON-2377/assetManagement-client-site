@@ -5,6 +5,8 @@ import LogIn from "../Layouts/LogInPage/LogIn";
 import Register from "../Layouts/RegisterPage/Register";
 import JoinAnEmployee from "../Layouts/JoinAsAnEmployee/JoinAnEmployee";
 import JoinAnHRManager from "../Layouts/JoinAsAnHRManager/JoinAnHRManager";
+import RequestForAnAssets from "../Layouts/JoinAsAnEmployee/RequestForAnAssets/RequestForAnAssets";
+import AddAnAsset from "../Layouts/JoinAsAnHRManager/AddAnAssets/AddAnAsset";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
             {
                 path: "/joinAnHRManager",
                 element: <JoinAnHRManager></JoinAnHRManager>
+            },
+            {
+                path: "/requestForAssets",
+                element: <RequestForAnAssets></RequestForAnAssets>
+            },
+            {
+                path: "/addAnAsset",
+                element: <AddAnAsset></AddAnAsset>
             }
         ]
     }
