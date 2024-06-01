@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const LogIn = () => {
 
-    const {userLogIn} = useAuthProvider();
+    const {userLogIn, googleLogIn} = useAuthProvider();
 
     const{register, handleSubmit} = useForm();
 
@@ -20,6 +20,17 @@ const LogIn = () => {
                 text: "Welcome to our site!",
                 icon: "success"
               });
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
+    // login with google
+    const handleGoogleLogIn = () => {
+        googleLogIn()
+        .then(res => {
+            console.log(res);
         })
         .catch(error => {
             console.log(error);
@@ -73,6 +84,9 @@ const LogIn = () => {
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary">Login</button>
+            </div>
+            <div className="form-control mt-6">
+              <button onClick={handleGoogleLogIn} className="btn ">Google</button>
             </div>
             <div className="form-control mt-6">
                 <Link to='/register' className="btn">Register</Link>
