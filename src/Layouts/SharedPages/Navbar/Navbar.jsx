@@ -97,7 +97,7 @@ const Navbar = () => {
 
       {/* login button section for medium and small devices */}
       <div className=" lg:hidden navbar-end ">
-        <a className="btn">Button</a>
+        <NavLink to='/login' className="btn bg-black hover:bg-black hover:bg-opacity-70 text-white ">LogIn</NavLink>
       </div>
     </div>
   );

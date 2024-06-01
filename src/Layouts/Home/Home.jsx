@@ -1,6 +1,7 @@
 import Banner from "./Banner/Banner";
 
 const Home = () => {
+
   return (
     <div>
       {/* banner section */}
@@ -284,6 +285,63 @@ const Home = () => {
             </div>
           </div>
         </section>
+      </section>
+
+      {/* packages sections */}
+      <section className="my-12 w-[90%] mx-auto ">
+        <h2 className="text-3xl font-bold text-center mb-8">Our Packages</h2>
+        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {/* Basic Package Card */}
+          <div className="border rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">Basic Package</h3>
+            <p className="text-gray-700 mb-2">Maximum 5 employees</p>
+            <p className="text-gray-800 font-bold mb-4">$5/month</p>
+            <ul className="list-disc list-inside mb-4">
+              <li className="text-gray-600">
+                Asset tracking for up to 5 employees
+              </li>
+              <li className="text-gray-600">Basic reporting</li>
+              <li className="text-gray-600">Email support</li>
+            </ul>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded">
+              Choose Plan
+            </button>
+          </div>
+          {/* Standard Package Card */}
+          <div className="border rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">Standard Package</h3>
+            <p className="text-gray-700 mb-2">Maximum 10 employees</p>
+            <p className="text-gray-800 font-bold mb-4">$8/month</p>
+            <ul className="list-disc list-inside mb-4">
+              <li className="text-gray-600">
+                Asset tracking for up to 10 employees
+              </li>
+              <li className="text-gray-600">Enhanced reporting</li>
+              <li className="text-gray-600">Priority email support</li>
+            </ul>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded">
+              Choose Plan
+            </button>
+          </div>
+          {/* Premium Package Card */}
+          <div className="border rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">Premium Package</h3>
+            <p className="text-gray-700 mb-2">Maximum 20 employees</p>
+            <p className="text-gray-800 font-bold mb-4">$15/month</p>
+            <ul className="list-disc list-inside mb-4">
+              <li className="text-gray-600">
+                Asset tracking for up to 20 employees
+              </li>
+              <li className="text-gray-600">
+                Advanced reporting and analytics
+              </li>
+              <li className="text-gray-600">24/7 customer support</li>
+            </ul>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded">
+              Choose Plan
+            </button>
+          </div>
+        </div>
       </section>
     </div>
   );
