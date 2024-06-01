@@ -3,6 +3,7 @@ import Main from "../Root/Main";
 import Home from "../Layouts/Home/Home";
 import LogIn from "../Layouts/LogInPage/LogIn";
 import Register from "../Layouts/RegisterPage/Register";
+import JoinAnEmployee from "../Layouts/JoinAsAnEmployee/JoinAnEmployee";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register></Register>
+            },
+            {
+                path: "/joinAnEmployee",
+                element: <JoinAnEmployee></JoinAnEmployee>
             }
         ]
     }
