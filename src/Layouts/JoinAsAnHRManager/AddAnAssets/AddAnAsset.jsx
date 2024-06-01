@@ -1,14 +1,27 @@
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../Hooks/AxiousSecureApi/useAxiosSecure";
 
 const AddAnAsset = () => {
+  // TODO: this route page will have to make it for HR manager conditionally
 
-    // TODO: this route page will have to make it for HR manager conditionally
+  // /addAssets
 
-    const {register, handleSubmit} = useForm();
+  const addAnAsserApi = useAxiosSecure();
 
-    const onSubmit = (data) => {
-        console.log(data);
-    }
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+
+    addAnAsserApi
+      .post("/addAssets", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -20,9 +33,7 @@ const AddAnAsset = () => {
             </label>
             <input
               type="text"
-              {
-                ...register("productName", {required: true})
-              }
+              {...register("productName", { required: true })}
               placeholder="product name"
               className="input input-bordered"
               required
@@ -34,9 +45,7 @@ const AddAnAsset = () => {
             </label>
             <input
               type="text"
-              {
-                ...register("productType", {required: true})
-              }
+              {...register("productType", { required: true })}
               placeholder="product type"
               className="input input-bordered"
               required
@@ -48,9 +57,7 @@ const AddAnAsset = () => {
             </label>
             <input
               type="number"
-              {
-                ...register("productQuantity", {required: true})
-              }
+              {...register("productQuantity", { required: true })}
               placeholder="product quantity"
               className="input input-bordered"
               required
@@ -63,18 +70,22 @@ const AddAnAsset = () => {
             <input
               type="text"
               placeholder="image URL"
-              {
-                ...register("productImage", {required: true})
-              }
+              {...register("assetImage", { required: true })}
               className="input input-bordered"
               required
             />
-            <label className="label">
-              <a href="#" className="label-text-alt link link-hover">
-                Forgot password?
-              </a>
-            </label>
           </div>
+          <select 
+          
+          {...register("returnable", {required:true})}
+
+          className="select select-bordered w-full max-w-xs">
+            <option disabled selected>
+              is Returnable
+            </option>
+            <option>True</option>
+            <option>false</option>
+          </select>
           <div className="form-control mt-6">
             <button className="btn ">Add product</button>
           </div>

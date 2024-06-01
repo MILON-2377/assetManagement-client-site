@@ -1,6 +1,13 @@
 import { IoIosSearch } from "react-icons/io";
+import useAssetsLoading from "../../../Hooks/AssetsDataLoader/useAssetsLoading";
+import AssetsDisplayCompo from "./components/AssetsDisplayCompo";
 
 const RequestForAnAssets = () => {
+
+
+    const [assets] = useAssetsLoading();
+
+
   return (
     <div>
       {/* assets search and filter sections 
@@ -44,26 +51,9 @@ const RequestForAnAssets = () => {
 
       {/* assets list section */}
       <section className="grid font-Poppins grid-cols-2 lg:grid-cols-4 ">
-        <div className=" h-[400px] bg-base-200 px-4 py-4 flex flex-col justify-between ">
-          <div className="w-full h-[220px] ">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7jx6fU9iGklbYaBhq3Ew9FkSAJDTB85-UUA&s"
-              className="w-full h-full object-cover "
-            />
-          </div>
-          <div className="flex flex-col gap-2 ">
-            <h2 className="card-title">
-              Asset Name
-              <div className="badge badge-secondary">Available or not</div>
-            </h2>
-            <div className="card-actions flex items-center justify-between ">
-              <div className=" bg-base-100 px-3 py-2">Returnable</div>
-            </div>
-          </div>
-          <button className=" bg-black hover:bg-black hover:bg-opacity-70 text-white px-4 py-3 w-full  ">
-            Request for Asset
-          </button>
-        </div>
+        {
+            assets?.map(item => <AssetsDisplayCompo key={item._id} assetsData={item} ></AssetsDisplayCompo>)
+        }
       </section>
     </div>
   );
