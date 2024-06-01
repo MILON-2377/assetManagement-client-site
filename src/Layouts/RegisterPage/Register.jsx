@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
-import Swal from "sweetalert2";
+
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -16,11 +16,7 @@ const Register = () => {
         userRegister(email, password)
         .then(res => {
             console.log(res);
-            Swal.fire({
-                title: "Register!",
-                text: "Your account register succssfully!",
-                icon: "success"
-              });
+            
         })
         .catch(error => {
             console.log(error);

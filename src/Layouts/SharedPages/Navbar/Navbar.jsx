@@ -100,7 +100,7 @@ const Navbar = () => {
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu font-Poppins flex items-center justify-center gap-5 menu-horizontal px-1">
-          <NavLink>
+          <NavLink to='/joinAnHRManager'>
             <li>Join as HR Manager</li>
           </NavLink>
           <button className="btn font-Poppins bg-black text-white ">

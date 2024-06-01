@@ -1,25 +1,25 @@
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import usePublicApi from "../../Hooks/PublicApi/usePublicApi";
-import Swal from "sweetalert2";
 
-const JoinAnEmployee = () => {
+const JoinAnHRManager = () => {
   const { register, handleSubmit } = useForm();
-  const { userRegister, user, googleLogIn } = useAuthProvider();
+  const { userRegister,} = useAuthProvider();
   const employeeAxios = usePublicApi();
 
   //   console.log(user);
 
   const onSubmit = (data) => {
     // console.log(data);
-    const { email, password, dateOfBirth, fullName } = data;
-    const employeeData = { fullName, email, dateOfBirth };
+    const { email, password, dateOfBirth, fullName, companyLogo, companyName } = data;
+    const employeeData = { fullName, email, dateOfBirth,  companyLogo, companyName};
 
     userRegister(email, password)
       .then((res) => {
         // console.log(res);
         employeeAxios
-          .post("/employees", employeeData)
+          .post("/hrManagers", employeeData)
           .then((res) => {
             // console.log(res.u);
             Swal.fire({
@@ -37,32 +37,7 @@ const JoinAnEmployee = () => {
       });
   };
 
-  //  user sign Up with google
-  const googleSignUp = () => {
-    googleLogIn()
-      .then((res) => {
-        const fullName = res.user.displayName;
-        const email = res.user.email;
-        const employeeData = { fullName, email };
-
-        employeeAxios
-          .post("/employees", employeeData)
-          .then(() => {
-            // console.log(res.u);
-            Swal.fire({
-              title: "Register!",
-              text: "Your account register succssfully!",
-              icon: "success",
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -85,6 +60,30 @@ const JoinAnEmployee = () => {
                 type="text"
                 placeholder="full name"
                 {...register("fullName", { required: true })}
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Company Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="company name"
+                {...register("companyName", { required: true })}
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Company Logo</span>
+              </label>
+              <input
+                type="text"
+                placeholder="logo URL"
+                {...register("companyLogo", { required: true })}
                 className="input input-bordered"
                 required
               />
@@ -139,15 +138,11 @@ const JoinAnEmployee = () => {
               <button className="btn btn-primary">Sign Up</button>
             </div>
           </form>
-          <div className="form-control mt-6">
-            <button onClick={googleSignUp} className="btn btn-primary">
-              Google
-            </button>
-          </div>
+          
         </div>
       </div>
     </div>
   );
 };
 
-export default JoinAnEmployee;
+export default JoinAnHRManager;
