@@ -1,31 +1,50 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../AxiousSecureApi/useAxiosSecure";
 import searhTextUpdate from "./searchTextUpdataState";
+import handlePaginationPage from "../PaginationCount/paginationPage";
+import handleSortingArr from "../AssetsDataSorting/assetsSorting";
+
+
 
 const useAssetsSearchApi = () => {
   const axiousSecures = useAxiosSecure();
-
   const searchText = searhTextUpdate();
-  console.log(searchText[0]);
 
 
+const fetchAssets = async (searchText) => {
+  let nextPage = handlePaginationPage();
+  const sortingName = handleSortingArr();
 
-  const { data: assetsData = [], refetch } = useQuery({
-    queryKey: ["assetsData"],
-    queryFn: async() => {
-       const res = await axiousSecures.get(`/assets`, {
-            params: { assetName: searchText[0] || "" },
-          });
-        return res.data;
+  if(nextPage === undefined){
+    nextPage = 0;
+  }
 
-    },
+  const params = {
+    searchText,
+    nextPage,
+    sortingName
+  };
+
+  if(searchText){
+    params.searchText = searchText[0];
+  }
+
+  const res = await axiousSecures.get("/assets", {params});
+  return res.data;
+
+}
+
+
+  const { data: resultData = [], refetch } = useQuery({
+    queryKey: ["resultData", searchText, ],
+    queryFn: async() => fetchAssets(searchText),
     enabled: !!searchText,
     throwOnError: (error) => {
       console.log(error);
     },
   });
 
-  return [assetsData, refetch];
+  return [resultData, refetch];
 };
 
 export default useAssetsSearchApi;

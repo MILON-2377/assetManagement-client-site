@@ -1,18 +1,22 @@
 import { IoIosSearch } from "react-icons/io";
-import useAssetsLoading from "../../../Hooks/AssetsDataLoader/useAssetsLoading";
 import AssetsDisplayCompo from "./components/AssetsDisplayCompo";
 import useAssetsSearchApi from "../../../Hooks/AssetsSearchApi/useAssetsSearchApi";
 import { useForm } from "react-hook-form";
 import searhTextUpdate from "../../../Hooks/AssetsSearchApi/searchTextUpdataState";
+import { useState } from "react";
+import handlePaginationPage from "../../../Hooks/PaginationCount/paginationPage";
+import handleSortingArr from "../../../Hooks/AssetsDataSorting/assetsSorting";
 
 const RequestForAnAssets = () => {
-  const [assets] = useAssetsLoading();
-  const [assetsData, refetch] = useAssetsSearchApi();
+  const [pages, setPages] = useState(0);
+  const [resultData, refetch] = useAssetsSearchApi();
 
-  // console.log(assetsData);
+  const { total, assetsData } = resultData;
+  const totalPages = Math.ceil(total / 10);
 
   const { register, handleSubmit, reset } = useForm();
 
+  // handle search data base on searh text
   const onSubmit = (data) => {
     const { assetName } = data;
     searhTextUpdate(assetName);
@@ -21,12 +25,43 @@ const RequestForAnAssets = () => {
     reset();
   };
 
+  // handle pagination next page 
+  const handleNextPage = () => {
+    if (totalPages - 1> pages) {
+      const newPage = pages + 1;
+      // console.log(newPage)
+      handlePaginationPage(newPage);
+      setPages(newPage);
+      refetch();
+    }
+
+    // console.log(newPage)
+    // console.log(newPage);
+  };
+
+  // handle pagination previous page
+  const handlePreviousPage = () => {
+    if (pages > 0) {
+      const newPage = pages - 1;
+      handlePaginationPage(newPage);
+      setPages(newPage);
+      refetch();
+    }
+  };
+
+  // handle sorting data
+  const handleSortingData = (e) => {
+    // console.log(e.target.value);
+    handleSortingArr(e.target.value);
+    refetch();
+  }
+
   return (
     <div>
       {/* assets search and filter sections 
         TODO: Search and filter items functinality should apply on the server side
         */}
-      <div className=" w-full flex items-center justify-evenly">
+      <div className=" w-full flex items-center gap-4 justify-evenly">
         {/* search section */}
         <fieldset className="w-full space-y-1 text-gray-100">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,32 +88,49 @@ const RequestForAnAssets = () => {
           </form>
         </fieldset>
 
+        {/* pagination section */}
+        <div className="join w-full ">
+          <div className="join grid grid-cols-2">
+            <button
+              onClick={handlePreviousPage}
+              className="join-item btn btn-outline text-[14px] "
+            >
+              Previous page
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="join-item btn btn-outline"
+            >
+              Next
+            </button>
+          </div>
+          {/* {pages?.map((page, index) => {
+            return (
+              <button key={index} className="btn bg-blue-950 hover:bg-blue-950 hover:bg-opacity-75 text-white text-xl ">1</button>
+            );
+          })} */}
+        </div>
+
         {/* assets filter section */}
-        <select className="select select-primary w-full max-w-xs">
+        <select onChange={handleSortingData} className="select select-primary w-full max-w-xs">
           <option disabled selected>
             What is the best TV show?
           </option>
           <option>Available</option>
+          <option>Not-available</option>
           <option>Returnable</option>
-          <option>Non returnable</option>
+          <option>Non-returnable</option>
         </select>
       </div>
 
       {/* assets list section */}
       <section className="grid font-Poppins grid-cols-2 lg:grid-cols-4 ">
-        {assetsData.length > 0
-          ? assetsData.map((item) => (
-              <AssetsDisplayCompo
-                key={item._id}
-                assetsData={item}
-              ></AssetsDisplayCompo>
-            ))
-          : assets?.map((item) => (
-              <AssetsDisplayCompo
-                key={item._id}
-                assetsData={item}
-              ></AssetsDisplayCompo>
-            ))}
+        {assetsData?.map((item) => (
+          <AssetsDisplayCompo
+            key={item._id}
+            assetsData={item}
+          ></AssetsDisplayCompo>
+        ))}
       </section>
     </div>
   );
