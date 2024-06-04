@@ -56,6 +56,7 @@ const AssetList = () => {
     refetch();
   };
 
+//   handle asset delete method
   const handleDeleteAsset = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -85,6 +86,16 @@ const AssetList = () => {
       }
     });
   };
+
+  const handleAssetUpdate = (id) => {
+    // axiousSecures.put(`/assets/${id}`)
+    // .then(res => {
+    //     console.log(res);
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    // })
+  }
 
   return (
     <div>
@@ -195,7 +206,7 @@ const AssetList = () => {
                     </td>
                     <td>{item?.date}</td>
                     <td>
-                      <button className="btn">Update</button>
+                      <button onClick={() => handleAssetUpdate(item._id)} className="btn">Update</button>
                     </td>
                     <td>
                       <button

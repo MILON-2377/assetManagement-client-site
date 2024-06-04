@@ -6,7 +6,7 @@ const EmployeeNavlinks = () => {
       <NavLink>
         <li>My Team</li>
       </NavLink>
-      <NavLink to="/joinAnEmployee">
+      <NavLink to="/requestForAssets">
         <li>Request for an Asset</li>
       </NavLink>
 

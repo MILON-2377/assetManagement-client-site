@@ -8,6 +8,7 @@ import JoinAnHRManager from "../Layouts/JoinAsAnHRManager/JoinAnHRManager";
 import RequestForAnAssets from "../Layouts/JoinAsAnEmployee/RequestForAnAssets/RequestForAnAssets";
 import AddAnAsset from "../Layouts/JoinAsAnHRManager/AddAnAssets/AddAnAsset";
 import AssetList from "../Layouts/JoinAsAnHRManager/AssetListPage/AssetList";
+import AllRequestForAssets from "../Layouts/JoinAsAnHRManager/AllRequestForAssetPage/AllRequestForAssets";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "/assetList",
                 element: <AssetList></AssetList>
+            },
+            {
+                path: "/allRequesForAsset",
+                element: <AllRequestForAssets></AllRequestForAssets>
             }
         ]
     }

@@ -4,6 +4,7 @@ const HRmanagerNavlinks = () => {
   return (
     <>
       <NavLink
+      to='/allRequesForAsset'
         className={({ isActive }) =>
           isActive
             ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "

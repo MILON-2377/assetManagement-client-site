@@ -30,13 +30,15 @@ const AssetsDisplayCompo = ({ assetsData }) => {
     const requestEmail = user?.email;
     const requestDate = today.toLocaleDateString("china");
     const _id = reqIdUpdate();
-    console.log(_id);
+    // console.log(_id);
 
     const noteData = e.target.note.value;
+    const requestStatus = "pending";
     const requestInfo = {
       requestName,
       requestEmail,
       requestDate,
+      requestStatus,
       noteData,
       ..._id,
     };
