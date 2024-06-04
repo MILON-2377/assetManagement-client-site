@@ -1,32 +1,41 @@
 import { useForm } from "react-hook-form";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
-import usePublicApi from "../../Hooks/PublicApi/usePublicApi";
+import handleUserRegisterData from "../../Hooks/UsersRegister/userRegisterData";
+import useUserRegister from "../../Hooks/UsersRegister/useUserRegister";
 import Swal from "sweetalert2";
 
 const JoinAnEmployee = () => {
   const { register, handleSubmit } = useForm();
   const { userRegister, user, googleLogIn } = useAuthProvider();
-  const employeeAxios = usePublicApi();
+  const registerUser = useUserRegister();
 
   //   console.log(user);
 
   const onSubmit = (data) => {
-    // console.log(data);
+    const Manager = false;
     const { email, password, dateOfBirth, fullName } = data;
-    const employeeData = { fullName, email, dateOfBirth };
+    const usersData = { fullName, email, dateOfBirth, Manager };
 
     userRegister(email, password)
-      .then((res) => {
+      .then(() => {
         // console.log(res);
-        employeeAxios
-          .post("/employees", employeeData)
+        handleUserRegisterData(usersData);
+        registerUser()
           .then((res) => {
-            // console.log(res.u);
-            Swal.fire({
-              title: "Register!",
-              text: "Your account register succssfully!",
-              icon: "success",
-            });
+            // console.log(res);
+            if (res.acknowledged) {
+              Swal.fire({
+                title: `Hello ${fullName}!`,
+                text: "Welcome to our asset managemanet webiste!",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: `Hello ${fullName}! ${res.message} `,
+                text: "Please login!",
+                icon: "success",
+              });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -43,17 +52,29 @@ const JoinAnEmployee = () => {
       .then((res) => {
         const fullName = res.user.displayName;
         const email = res.user.email;
-        const employeeData = { fullName, email };
+        const Manager = false;
+        const usersRegisterData = { fullName, email, Manager };
 
-        employeeAxios
-          .post("/employees", employeeData)
-          .then(() => {
-            // console.log(res.u);
-            Swal.fire({
-              title: "Register!",
-              text: "Your account register succssfully!",
-              icon: "success",
-            });
+        // user data store the another js hook
+        handleUserRegisterData(usersRegisterData);
+
+        // user register to use hook
+        registerUser()
+          .then((res) => {
+            // console.log(res);
+            if (res.acknowledged) {
+              Swal.fire({
+                title: `Hello ${fullName}!`,
+                text: "Welcome to our asset managemanet webiste!",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: `Hello ${fullName}! ${res.message} `,
+                text: "Please login!",
+                icon: "success",
+              });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -113,15 +134,10 @@ const JoinAnEmployee = () => {
                 className="input input-bordered"
                 required
               />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Date of birth</span>
               </label>
               <input
                 type="date"

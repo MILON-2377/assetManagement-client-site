@@ -4,39 +4,41 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 const LogIn = () => {
+  const { userLogIn, googleLogIn } = useAuthProvider();
 
-    const {userLogIn, googleLogIn} = useAuthProvider();
+  const { register, handleSubmit, reset } = useForm();
 
-    const{register, handleSubmit} = useForm();
+  const onSubmit = (data) => {
+    const { email, password } = data;
 
-    const onSubmit = (data) => {
-        const {email, password} = data;
+    userLogIn(email, password)
+      .then(() => {
+        // console.log(res);
+        Swal.fire({
+          title: "User LogIn!",
+          text: "Welcome to our site!",
+          icon: "success",
+        });
 
-        userLogIn(email, password)
-        .then(res => {
-            console.log(res);
-            Swal.fire({
-                title: "User LogIn!",
-                text: "Welcome to our site!",
-                icon: "success"
-              });
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
+        reset();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    // login with google
-    const handleGoogleLogIn = () => {
-        googleLogIn()
-        .then(res => {
-            console.log(res);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-
+  // login with google
+  const handleGoogleLogIn = () => {
+    googleLogIn()
+      .then(() => {
+        // const fullName = res?.user?.displayName;
+        // const email = res?.user?.email;
+        // const userInfo = {fullName, email};
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -58,7 +60,7 @@ const LogIn = () => {
               <input
                 type="email"
                 placeholder="email"
-                {...register("email", {required: true})}
+                {...register("email", { required: true })}
                 className="input input-bordered"
                 required
               />
@@ -70,9 +72,7 @@ const LogIn = () => {
               <input
                 type="password"
                 placeholder="password"
-                {
-                    ...register("password", {required: true})
-                }
+                {...register("password", { required: true })}
                 className="input input-bordered"
                 required
               />
@@ -86,10 +86,14 @@ const LogIn = () => {
               <button className="btn btn-primary">Login</button>
             </div>
             <div className="form-control mt-6">
-              <button onClick={handleGoogleLogIn} className="btn ">Google</button>
+              <button onClick={handleGoogleLogIn} className="btn ">
+                Google
+              </button>
             </div>
             <div className="form-control mt-6">
-                <Link to='/register' className="btn">Register</Link>
+              <Link to="/register" className="btn">
+                Register
+              </Link>
             </div>
           </form>
         </div>

@@ -3,10 +3,11 @@ import useAxiosSecure from "../AxiousSecureApi/useAxiosSecure";
 import searhTextUpdate from "./searchTextUpdataState";
 import handlePaginationPage from "../PaginationCount/paginationPage";
 import handleSortingArr from "../AssetsDataSorting/assetsSorting";
+import sortingAssetsDataStore from "../HandleSortingAssetsData/sortingAssetsData";
 
 
 
-const useAssetsSearchApi = () => {
+const useAssetsSearchApi = (limit) => {
   const axiousSecures = useAxiosSecure();
   const searchText = searhTextUpdate();
 
@@ -14,6 +15,7 @@ const useAssetsSearchApi = () => {
 const fetchAssets = async (searchText) => {
   let nextPage = handlePaginationPage();
   const sortingName = handleSortingArr();
+  const sortQuantityName = sortingAssetsDataStore();
 
   if(nextPage === undefined){
     nextPage = 0;
@@ -22,7 +24,9 @@ const fetchAssets = async (searchText) => {
   const params = {
     searchText,
     nextPage,
-    sortingName
+    sortingName,
+    sortQuantityName,
+    limit
   };
 
   if(searchText){

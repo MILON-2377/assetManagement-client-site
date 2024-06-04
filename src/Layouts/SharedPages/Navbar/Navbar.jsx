@@ -1,8 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuthProvider from "../../../Hooks/AuthProviderHooks/useAuthProvider";
+import Employee from "./NormalEmployee/Employee";
+import HRManager from "./HRmanager/HRManager";
+import HRmanagerNavlinks from "./HRmanager/components/HRmanagerNavlinks";
+import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
 
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
+
+  const Manager = true;
 
   const handleUsrLogOut = () => {
     logOut()
@@ -13,6 +19,8 @@ const Navbar = () => {
         console.log(error);
       });
   };
+
+
 
   return (
     <div className="navbar font-Poppins flex items-center justify-evenly bg-base-100">
@@ -37,25 +45,61 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-4 shadow bg-base-100 gap-2 rounded-box w-52"
           >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            {user ? (
+              <>
+                {Manager ? (
+                  <>
+                    <HRManager></HRManager>
+                    <HRmanagerNavlinks></HRmanagerNavlinks>
+                  </>
+                ) : (
+                  <>
+                    {Manager !== undefined && (
+                      <>
+                        {" "}
+                        <Employee></Employee>
+                        <EmployeeNavlinks></EmployeeNavlinks>{" "}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
+                      : " px-3 py-2  rounded-md text-black "
+                  }
+                >
+                  <li>Home</li>
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
+                      : " px-3 py-2  rounded-md text-black "
+                  }
+                  to="/joinAnEmployee"
+                >
+                  <li>Join as Employee</li>
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
+                      : " px-3 py-2  rounded-md text-black "
+                  }
+                  to="/joinAnHRManager"
+                >
+                  <li>Join as HR Manager</li>
+                </NavLink>
+              </>
+            )}
           </ul>
         </div>
       </div>
@@ -65,6 +109,23 @@ const Navbar = () => {
         <ul className="menu flex items-center justify-center gap-5 menu-horizontal px-1">
           {user ? (
             <>
+              {Manager ? (
+                <>
+                  <HRManager></HRManager>
+                </>
+              ) : (
+                <>
+                  {Manager !== undefined && (
+                    <>
+                      {" "}
+                      <Employee></Employee>
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          ) : (
+            <>
               <NavLink>
                 <li>Home</li>
               </NavLink>
@@ -72,34 +133,7 @@ const Navbar = () => {
                 <li>Join as Employee</li>
               </NavLink>
             </>
-          ) : (
-            <>
-              <NavLink to="/joinAnEmployee">
-                <li>My Assets</li>
-              </NavLink>
-            </>
           )}
-
-          {/* <NavLink>
-            <li>Join as Employee</li>
-          </NavLink>
-          <NavLink>
-            <li>Home</li>
-          </NavLink> */}
-
-          {/* <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 32</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li> */}
         </ul>
       </div>
 
@@ -113,13 +147,20 @@ const Navbar = () => {
         <ul className="menu font-Poppins flex items-center justify-center gap-5 menu-horizontal px-1">
           {user ? (
             <>
-              <NavLink to="/joinAnHRManager">
-                <li>My Team</li>
-              </NavLink>
-              <NavLink to="/requestForAssets">
-                <li>Request for an Asset</li>
-              </NavLink>
-
+              {Manager ? (
+                <>
+                  <HRmanagerNavlinks></HRmanagerNavlinks>
+                </>
+              ) : (
+                <>
+                  {Manager !== undefined && (
+                    <>
+                      {" "}
+                      <EmployeeNavlinks></EmployeeNavlinks>
+                    </>
+                  )}
+                </>
+              )}
               {/* user profile section */}
               <div className="dropdown dropdown-end">
                 <div
@@ -158,9 +199,12 @@ const Navbar = () => {
               <NavLink to="/joinAnHRManager">
                 <li>Join as HR Manager</li>
               </NavLink>
-              <button className="btn font-Poppins bg-black text-white ">
+              <Link
+                to="/login"
+                className="btn font-Poppins bg-black text-white "
+              >
                 LogIn
-              </button>
+              </Link>
             </>
           )}
         </ul>

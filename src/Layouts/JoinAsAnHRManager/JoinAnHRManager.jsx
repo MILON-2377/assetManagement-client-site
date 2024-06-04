@@ -1,33 +1,50 @@
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
-import usePublicApi from "../../Hooks/PublicApi/usePublicApi";
+import handleUserRegisterData from "../../Hooks/UsersRegister/userRegisterData";
+import useUserRegister from "../../Hooks/UsersRegister/useUserRegister";
 
 const JoinAnHRManager = () => {
-  const { register, handleSubmit } = useForm();
-  const { userRegister,} = useAuthProvider();
-  const employeeAxios = usePublicApi();
+  const { register, handleSubmit, reset } = useForm();
+  const { userRegister } = useAuthProvider();
+  const registerUser = useUserRegister();
 
   //   console.log(user);
 
   const onSubmit = (data) => {
     // console.log(data);
-    const { email, password, dateOfBirth, fullName, companyLogo, companyName } = data;
-    const hRManager = "Manager";
-    const employeeData = { fullName, email, dateOfBirth,  companyLogo, companyName, hRManager};
+    const { email, password, dateOfBirth, fullName, companyLogo, companyName } =
+      data;
+    const Manager = true;
+    const userData = {
+      fullName,
+      email,
+      dateOfBirth,
+      companyLogo,
+      companyName,
+      Manager,
+    };
 
     userRegister(email, password)
       .then((res) => {
-        // console.log(res);
-        employeeAxios
-          .post("/hrManagers", employeeData)
+        handleUserRegisterData(userData);
+        registerUser()
           .then((res) => {
-            // console.log(res.u);
-            Swal.fire({
-              title: "Register!",
-              text: "Your account register succssfully!",
-              icon: "success",
-            });
+            // console.log(res);
+            if (res.acknowledged) {
+              Swal.fire({
+                title: `Hello ${fullName}!`,
+                text: "Welcome to our asset managemanet webiste!",
+                icon: "success",
+              });
+              reset();
+            } else {
+              Swal.fire({
+                title: `Hello ${fullName}! ${res.message} `,
+                text: "Please login!",
+                icon: "success",
+              });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -37,8 +54,6 @@ const JoinAnHRManager = () => {
         console.log(error);
       });
   };
-
-  
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -113,15 +128,10 @@ const JoinAnHRManager = () => {
                 className="input input-bordered"
                 required
               />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Date of birth</span>
               </label>
               <input
                 type="date"
@@ -139,7 +149,6 @@ const JoinAnHRManager = () => {
               <button className="btn btn-primary">Sign Up</button>
             </div>
           </form>
-          
         </div>
       </div>
     </div>

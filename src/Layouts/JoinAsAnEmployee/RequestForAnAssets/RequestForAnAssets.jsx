@@ -20,7 +20,6 @@ const RequestForAnAssets = () => {
   const onSubmit = (data) => {
     const { assetName } = data;
     searhTextUpdate(assetName);
-    // console.log(name[0]);
     refetch();
     reset();
   };
@@ -29,14 +28,10 @@ const RequestForAnAssets = () => {
   const handleNextPage = () => {
     if (totalPages - 1> pages) {
       const newPage = pages + 1;
-      // console.log(newPage)
       handlePaginationPage(newPage);
       setPages(newPage);
       refetch();
     }
-
-    // console.log(newPage)
-    // console.log(newPage);
   };
 
   // handle pagination previous page
