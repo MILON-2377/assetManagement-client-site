@@ -6,12 +6,13 @@ const useRequestedAssetsApi = () => {
   const axiousSecureApi = useAxiosSecure();
 
   const fetchData = async () => {
+
     const textName = searchTextNameHook();
     const param = {
       textName,
     };
 
-    const res = await axiousSecureApi.get("/requestAssets", {
+    const res = await axiousSecureApi.get(`/requestAssets`, {
       params: param,
     });
     return res.data;

@@ -8,7 +8,7 @@ import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
 
-  const Manager = true;
+  const Manager = false;
 
   const handleUsrLogOut = () => {
     logOut()

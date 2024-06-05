@@ -1,8 +1,8 @@
 const userArr = [];
 
 const isUserLoggedIN = (user) => {
+  // console.log(user);
   if (user) {
-    // console.log(user.email);
     userArr.length = 0;
     userArr.push(user.email);
   }

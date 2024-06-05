@@ -9,6 +9,7 @@ import RequestForAnAssets from "../Layouts/JoinAsAnEmployee/RequestForAnAssets/R
 import AddAnAsset from "../Layouts/JoinAsAnHRManager/AddAnAssets/AddAnAsset";
 import AssetList from "../Layouts/JoinAsAnHRManager/AssetListPage/AssetList";
 import AllRequestForAssets from "../Layouts/JoinAsAnHRManager/AllRequestForAssetPage/AllRequestForAssets";
+import MyRequestedAssets from "../Layouts/JoinAsAnEmployee/MyRequestedAssetPage/MyRequestedAssets";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: "/allRequesForAsset",
                 element: <AllRequestForAssets></AllRequestForAssets>
+            },
+            {
+                path: "/myRequestedAssets",
+                element: <MyRequestedAssets></MyRequestedAssets>
             }
         ]
     }

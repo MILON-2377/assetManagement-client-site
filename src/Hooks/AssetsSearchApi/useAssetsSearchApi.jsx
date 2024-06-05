@@ -7,12 +7,12 @@ import sortingAssetsDataStore from "../HandleSortingAssetsData/sortingAssetsData
 
 
 
-const useAssetsSearchApi = (limit) => {
+const useAssetsSearchApi = () => {
   const axiousSecures = useAxiosSecure();
-  const searchText = searhTextUpdate();
 
 
 const fetchAssets = async (searchText) => {
+  const searchName = searhTextUpdate();
   let nextPage = handlePaginationPage();
   const sortingName = handleSortingArr();
   const sortQuantityName = sortingAssetsDataStore();
@@ -22,15 +22,14 @@ const fetchAssets = async (searchText) => {
   }
 
   const params = {
-    searchText,
+    searchName,
     nextPage,
     sortingName,
     sortQuantityName,
-    limit
   };
 
   if(searchText){
-    params.searchText = searchText[0];
+    params.searchName = searchName;
   }
 
   const res = await axiousSecures.get("/assets", {params});
@@ -40,9 +39,8 @@ const fetchAssets = async (searchText) => {
 
 
   const { data: resultData = [], refetch } = useQuery({
-    queryKey: ["resultData", searchText, ],
-    queryFn: async() => fetchAssets(searchText),
-    enabled: !!searchText,
+    queryKey: ["resultData"],
+    queryFn: async() => fetchAssets(),
     throwOnError: (error) => {
       console.log(error);
     },

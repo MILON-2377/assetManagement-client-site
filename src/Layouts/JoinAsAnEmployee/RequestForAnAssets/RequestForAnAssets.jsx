@@ -20,6 +20,7 @@ const RequestForAnAssets = () => {
   const onSubmit = (data) => {
     const { assetName } = data;
     searhTextUpdate(assetName);
+    handleSortingArr(1);
     refetch();
     reset();
   };
@@ -48,8 +49,11 @@ const RequestForAnAssets = () => {
   const handleSortingData = (e) => {
     // console.log(e.target.value);
     handleSortingArr(e.target.value);
+    searhTextUpdate(1);
     refetch();
   }
+
+  // console.log(resultData);
 
   return (
     <div>

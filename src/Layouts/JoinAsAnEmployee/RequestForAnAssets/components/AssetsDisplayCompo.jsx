@@ -26,8 +26,11 @@ const AssetsDisplayCompo = ({ assetsData }) => {
     e.preventDefault();
 
     const today = new Date();
-    const requestName = user?.displayName;
+    const assetName = productName;
+
+    const assetType = returnable ? "returnable" : "non-returnable";
     const requestEmail = user?.email;
+    const requestName = user?.displayName;   
     const requestDate = today.toLocaleDateString("china");
     const _id = reqIdUpdate();
     // console.log(_id);
@@ -35,9 +38,11 @@ const AssetsDisplayCompo = ({ assetsData }) => {
     const noteData = e.target.note.value;
     const requestStatus = "pending";
     const requestInfo = {
-      requestName,
-      requestEmail,
+      assetName,
+      assetType,
       requestDate,
+      requestEmail,
+      requestName,
       requestStatus,
       noteData,
       ..._id,
@@ -46,17 +51,17 @@ const AssetsDisplayCompo = ({ assetsData }) => {
     axiosSecureApi
       .post("/requestAssets", requestInfo)
       .then((res) => {
-        if(res.status === 201){
+        if (res.status === 201) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
             text: `Something went wrong! ${res.data.message}  `,
           });
-        }else{
+        } else {
           Swal.fire({
             title: "Data store!",
             text: "Your data store successfully to database!",
-            icon: "success"
+            icon: "success",
           });
         }
         document.getElementById("my_modal_3").close();
