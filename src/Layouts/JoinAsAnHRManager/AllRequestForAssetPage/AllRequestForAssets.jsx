@@ -1,8 +1,10 @@
+import useAxiosSecure from "../../../Hooks/AxiousSecureApi/useAxiosSecure";
 import searchTextNameHook from "../../../Hooks/RequestedAssetsApi/searchTextName";
 import useRequestedAssetsApi from "../../../Hooks/RequestedAssetsApi/useRequestedAssetsApi";
 
 const AllRequestForAssets = () => {
   const [requestedData, refetch] = useRequestedAssetsApi();
+  const axiousSecuresApi = useAxiosSecure();
 
   console.log(requestedData);
 
@@ -11,17 +13,29 @@ const AllRequestForAssets = () => {
     const searchTextName = e.target.Search.value;
     searchTextNameHook(searchTextName);
     refetch();
-
     e.target.reset();
+  };
+
+  const handleAssetRequestApproved = (id) => {
+    console.log(id);
+    axiousSecuresApi.put(`/`)
   }
 
   return (
     <div className="w-[98%] mx-auto">
       {/* search bar section */}
       <div>
-        <form onSubmit={handleSearchAssets} className="flex items-center w-full justify-center gap-2">
+        <form
+          onSubmit={handleSearchAssets}
+          className="flex items-center w-full justify-center gap-2"
+        >
           <label className="input w-full lg:w-[40%] input-bordered flex items-center gap-2">
-            <input type="text" className="grow" name="Search" placeholder="Search" />
+            <input
+              type="text"
+              className="grow"
+              name="Search"
+              placeholder="Search"
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -57,23 +71,26 @@ const AllRequestForAssets = () => {
             </tr>
           </thead>
           <tbody>
-            {requestedData.length >= 1 && requestedData?.map((item, index) => (
-              <>
-                <tr key={index}>
-                  <td>{item?.assetName}</td>
-                  <td>{item?.assetType}</td>
-                  <td>{item?.requestEmail}</td>
-                  <td>{item?.requestName}</td>
-                  <td>{item?.requestDate}</td>
-                  <td>{item?.noteData}</td>
-                  <td>{item?.requestStatus}</td>
-                  <td className="btn">Apporve request</td>
-                  <td className=" px-3 py-2 rounded-md bg-base-200 ">
-                    Reject request
-                  </td>
-                </tr>
-              </>
-            ))}
+            {requestedData.length >= 1 &&
+              requestedData?.map((item, index) => (
+                <>
+                  <tr key={index}>
+                    <td>{item?.assetName}</td>
+                    <td>{item?.assetType}</td>
+                    <td>{item?.requestEmail}</td>
+                    <td>{item?.requestName}</td>
+                    <td>{item?.requestDate}</td>
+                    <td>{item?.noteData}</td>
+                    <td className="text-yellow-500">{item?.requestStatus}</td>
+                    <td>
+                      <button onClick={ () => handleAssetRequestApproved(item?._id)} className=" px-1 py-1 rounded-md bg-blue-700 text-white "> Apporve request</button>
+                    </td>
+                    <td>
+                      <button className=" px-1 py-1 rounded-md bg-red-700 text-white ">Reject request</button>
+                    </td>
+                  </tr>
+                </>
+              ))}
           </tbody>
         </table>
       </div>

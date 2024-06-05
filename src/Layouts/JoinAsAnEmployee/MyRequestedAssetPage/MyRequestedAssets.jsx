@@ -5,15 +5,20 @@ import searhTextUpdate from "../../../Hooks/AssetsSearchApi/searchTextUpdataStat
 import handleSortingArr from "../../../Hooks/AssetsDataSorting/assetsSorting";
 import useAxiosSecure from "../../../Hooks/AxiousSecureApi/useAxiosSecure";
 import Swal from "sweetalert2";
+import isUserLoggedIN from "../../../Hooks/UsersDataLoadApi/isUserLoggedIn";
+import { Link } from "react-router-dom";
 
 const MyRequestedAssets = () => {
   const { user } = useAuthProvider();
   const [myRequestedData, refetch] = useMyRequestedDataLoadingApi();
   const axiousSecureApi = useAxiosSecure();
 
+  const userLogger = isUserLoggedIN();
+
   useEffect(() => {
+    console.log(userLogger)
     refetch();
-  }, [user?.email]);
+  }, [user, userLogger]);
 
   // search items and filter handle
   const handleSearchItems = (e) => {
@@ -34,7 +39,7 @@ const MyRequestedAssets = () => {
     refetch();
   };
 
-  console.log(myRequestedData);
+  // console.log(myRequestedData);
 
   const handleReturnAsset = (id) => {
     // console.log(id === "665b55f5e7d2b2d8f03f6b27")
@@ -162,7 +167,7 @@ const MyRequestedAssets = () => {
                                 </>
                               ) : (
                                 <>
-                                  <button className="btn">Printe Asset</button>
+                                  <Link to='/printeAssetPage' className="btn">Printe Asset</Link>
                                 </>
                               ))}
                           </>

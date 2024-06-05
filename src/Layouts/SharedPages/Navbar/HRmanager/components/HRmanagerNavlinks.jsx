@@ -4,7 +4,7 @@ const HRmanagerNavlinks = () => {
   return (
     <>
       <NavLink
-      to='/allRequesForAsset'
+        to="/allRequesForAsset"
         className={({ isActive }) =>
           isActive
             ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
@@ -32,6 +32,7 @@ const HRmanagerNavlinks = () => {
         <li>My Employee List</li>
       </NavLink>
       <NavLink
+        to="/addAnEmployee"
         className={({ isActive }) =>
           isActive
             ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "

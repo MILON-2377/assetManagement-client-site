@@ -4,11 +4,19 @@ import Employee from "./NormalEmployee/Employee";
 import HRManager from "./HRmanager/HRManager";
 import HRmanagerNavlinks from "./HRmanager/components/HRmanagerNavlinks";
 import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
+import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
+  const [userData, refetch] = useUserDataLoadingApi();
+  // const Manager = true;
 
-  const Manager = false;
+  const { Manager } = userData;
+
+  useEffect(() => {
+    refetch();
+  }, [user]);
 
   const handleUsrLogOut = () => {
     logOut()
@@ -19,8 +27,6 @@ const Navbar = () => {
         console.log(error);
       });
   };
-
-
 
   return (
     <div className="navbar font-Poppins flex items-center justify-evenly bg-base-100">
@@ -47,25 +53,13 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-4 shadow bg-base-100 gap-2 rounded-box w-52"
           >
-            {user ? (
+            {user && Manager ? (
               <>
-                {Manager ? (
-                  <>
-                    <HRManager></HRManager>
-                    <HRmanagerNavlinks></HRmanagerNavlinks>
-                  </>
-                ) : (
-                  <>
-                    {Manager !== undefined && (
-                      <>
-                        {" "}
-                        <Employee></Employee>
-                        <EmployeeNavlinks></EmployeeNavlinks>{" "}
-                      </>
-                    )}
-                  </>
-                )}
+                <HRManager></HRManager>
+                <HRmanagerNavlinks></HRmanagerNavlinks>
               </>
+            ) : user ? (
+              <></>
             ) : (
               <>
                 <NavLink
@@ -107,22 +101,13 @@ const Navbar = () => {
       {/* this title section is for larges device */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu flex items-center justify-center gap-5 menu-horizontal px-1">
-          {user ? (
+          {user && Manager ? (
             <>
-              {Manager ? (
-                <>
-                  <HRManager></HRManager>
-                </>
-              ) : (
-                <>
-                  {Manager !== undefined && (
-                    <>
-                      {" "}
-                      <Employee></Employee>
-                    </>
-                  )}
-                </>
-              )}
+              <HRManager></HRManager>
+            </>
+          ) : user ? (
+            <>
+              <Employee></Employee>
             </>
           ) : (
             <>
@@ -145,23 +130,10 @@ const Navbar = () => {
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu font-Poppins flex items-center justify-center gap-5 menu-horizontal px-1">
-          {user ? (
+          {user && Manager ? (
             <>
-              {Manager ? (
-                <>
-                  <HRmanagerNavlinks></HRmanagerNavlinks>
-                </>
-              ) : (
-                <>
-                  {Manager !== undefined && (
-                    <>
-                      {" "}
-                      <EmployeeNavlinks></EmployeeNavlinks>
-                    </>
-                  )}
-                </>
-              )}
-              {/* user profile section */}
+              <HRmanagerNavlinks></HRmanagerNavlinks>
+
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
@@ -193,6 +165,10 @@ const Navbar = () => {
                   </li>
                 </ul>
               </div>
+            </>
+          ) : user ? (
+            <>
+              <EmployeeNavlinks></EmployeeNavlinks>
             </>
           ) : (
             <>

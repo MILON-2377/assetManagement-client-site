@@ -56,7 +56,7 @@ const AssetList = () => {
     refetch();
   };
 
-//   handle asset delete method
+  //   handle asset delete method
   const handleDeleteAsset = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -95,7 +95,7 @@ const AssetList = () => {
     // .catch(error => {
     //     console.log(error);
     // })
-  }
+  };
 
   return (
     <div>
@@ -196,28 +196,19 @@ const AssetList = () => {
             </thead>
             <tbody>
               {assetsData?.map((item, index) => (
-                <>
-                  <tr key={index}>
-                    <th>{item?.productName}</th>
-                    <td>{item?.productType}</td>
-                    <td>{item?.productQuantity}</td>
-                    <td>
-                      {item?.returnable ? "Returnable" : "Non-returnable"}
+                <tr key={index}>
+                  <td>{item?.productName}</td>
+                  <td>{item?.returnable ? "Returnable" : "Non-returnable"}</td>
+                  <td>{item?.productQuantity}</td>
+  
+                  <td>{item?.date}</td>
+                  <td className="">
+                    <button onClick={() => handleAssetUpdate(item._id)} className="bg-blue-500 text-white px-1 py-1 rounded-md">Update</button>
+                  </td>
+                    <td  className="">
+                      <button onClick={() => handleDeleteAsset(item._id)} className="bg-red-500 text-white px-1 py-1 rounded-md">Delete</button>
                     </td>
-                    <td>{item?.date}</td>
-                    <td>
-                      <button onClick={() => handleAssetUpdate(item._id)} className="btn">Update</button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => handleDeleteAsset(item._id)}
-                        className="btn"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </>
+                </tr>
               ))}
               {/* row 1 */}
             </tbody>

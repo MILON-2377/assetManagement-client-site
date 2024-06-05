@@ -1,29 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../AxiousSecureApi/useAxiosSecure";
-import useAuthProvider from "../../../Hooks/AuthProviderHooks/useAuthProvider";
-
+import useAuthProvider from "../AuthProviderHooks/useAuthProvider";
 
 const useUserDataLoadingApi = () => {
-  const axiousSecureApi = useAxiosSecure();
-  const {user} = useAuthProvider();
+    const axiousSecureApi = useAxiosSecure();
+    const {user} = useAuthProvider();
 
-  const fetchData = async () => {
+    const userArrr = [];
+    if(user){
+        userArrr.length = 0;
+        userArrr.push(user.email);
+    }
+    
     const param = {
-      email: user?.email,
+        userEmail: userArrr[0],
+    }
+
+    const fetchData = async() => {
+
+        const res = await axiousSecureApi.get("/users", {
+            params:param,
+        });
+        return res.data;
     };
 
-    const res = await axiousSecureApi.get("/users", {
-      params: param,
+    const {data: userData = [], refetch} = useQuery({
+        queryKey: ["userData"],
+        queryFn: () => fetchData(),
     });
-    return res.data;
-  };
 
-  const { data: userData = []} = useQuery({
-    queryKey: ["userData"],
-    queryFn: async () => fetchData(),
-  });
-
-  return [userData];
+    return [userData, refetch];
 };
 
 export default useUserDataLoadingApi;
