@@ -3,6 +3,8 @@ import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import useUserDataLoadingApi from "../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 import Banner from "./Banner/Banner";
 import AllPendingAssetRequest from "./Components/AllPendingAssetRequest";
+import TopMostRequestedAsset from "./Components/TopMostRequestedAsset";
+import sortingAssetsDataStore from "../../Hooks/HandleSortingAssetsData/sortingAssetsData";
 
 const Home = () => {
   const { user } = useAuthProvider();
@@ -12,6 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     refetch();
+    sortingAssetsDataStore("ltn10");
   }, [user]);
 
   return (
@@ -23,6 +26,12 @@ const Home = () => {
         {user && Manager ? (
           <>
             <AllPendingAssetRequest></AllPendingAssetRequest>
+            <TopMostRequestedAsset></TopMostRequestedAsset>
+
+            {/* those assets quantity less than 10 */}
+            <div className=" w-[95%] mx-auto ">
+              
+            </div>
           </>
         ) : user ? (
           <></>

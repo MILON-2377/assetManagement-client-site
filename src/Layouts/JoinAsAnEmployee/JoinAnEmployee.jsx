@@ -6,15 +6,29 @@ import Swal from "sweetalert2";
 
 const JoinAnEmployee = () => {
   const { register, handleSubmit } = useForm();
-  const { userRegister, user, googleLogIn } = useAuthProvider();
+  const { userRegister, googleLogIn } = useAuthProvider();
   const registerUser = useUserRegister();
+
+  const Manager = false;
+  const Affiliated = "not affiliated";
+  const memberType = "Normal employee";
+  const companyName = "";
+  const companyLogoImage = "";
 
   //   console.log(user);
 
   const onSubmit = (data) => {
-    const Manager = false;
     const { email, password, dateOfBirth, fullName } = data;
-    const usersData = { fullName, email, dateOfBirth, Manager };
+    const usersData = {
+      fullName,
+      email,
+      dateOfBirth,
+      Manager,
+      Affiliated,
+      memberType,
+      companyName,
+      companyLogoImage,
+    };
 
     userRegister(email, password)
       .then(() => {
@@ -52,8 +66,16 @@ const JoinAnEmployee = () => {
       .then((res) => {
         const fullName = res.user.displayName;
         const email = res.user.email;
-        const Manager = false;
-        const usersRegisterData = { fullName, email, Manager };
+
+        const usersRegisterData = {
+          fullName,
+          email,
+          Manager,
+          Affiliated,
+          memberType,
+          companyName,
+          companyLogoImage,
+        };
 
         // user data store the another js hook
         handleUserRegisterData(usersRegisterData);

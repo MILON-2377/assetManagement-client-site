@@ -12,6 +12,7 @@ import AllRequestForAssets from "../Layouts/JoinAsAnHRManager/AllRequestForAsset
 import MyRequestedAssets from "../Layouts/JoinAsAnEmployee/MyRequestedAssetPage/MyRequestedAssets";
 import PrinteRequestAsset from "../Layouts/JoinAsAnEmployee/MyRequestedAssetPage/PrinteRequestAsset";
 import AddAnEmployee from "../Layouts/JoinAsAnHRManager/AddAnEmployeePage/AddAnEmployee";
+import MyEmployeeList from "../Layouts/JoinAsAnHRManager/MyEmployeeList/MyEmployeeList";
 
 const router = createBrowserRouter([
     {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
             {
                 path: "/addAnEmployee",
                 element: <AddAnEmployee></AddAnEmployee>
+            },
+            {
+                path: "/myEmpoyeeList",
+                element: <MyEmployeeList></MyEmployeeList>
             }
         ]
     }

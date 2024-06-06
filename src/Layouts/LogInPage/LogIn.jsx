@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import handleUserRegisterData from "../../Hooks/UsersRegister/userRegisterData";
+import useUserRegister from "../../Hooks/UsersRegister/useUserRegister";
 
 const LogIn = () => {
   const { userLogIn, googleLogIn } = useAuthProvider();
 
   const { register, handleSubmit, reset } = useForm();
+  const userRegisterWithGoogle = useUserRegister();
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -30,10 +33,23 @@ const LogIn = () => {
   // login with google
   const handleGoogleLogIn = () => {
     googleLogIn()
-      .then(() => {
-        // const fullName = res?.user?.displayName;
-        // const email = res?.user?.email;
-        // const userInfo = {fullName, email};
+      .then((res) => {
+        const fullName = res?.user?.displayName;
+        const email = res?.user?.email;
+        const Manager = false;
+        const Affiliated = "not affiliated";
+        const memberType = "Normal employee";
+        const companyName = "";
+        const companyLogoImage = "";
+        const userInfo = { fullName, email, Manager, Affiliated, memberType, companyLogoImage, companyName };
+        handleUserRegisterData(userInfo);
+        userRegisterWithGoogle()
+        .then(() => {
+          // console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        })
       })
       .catch((error) => {
         console.log(error);

@@ -3,11 +3,12 @@ import useAxiosSecure from "../AxiousSecureApi/useAxiosSecure";
 
 const useAssetsLoading = () => {
   const axiosSecure = useAxiosSecure();
-
   const { data: assets=[] } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/assets");
+      const res = await axiosSecure.get("/assets",{
+        params: name,
+      });
       return res.data;
     },
   });

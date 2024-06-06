@@ -17,6 +17,8 @@ const fetchAssets = async (searchText) => {
   const sortingName = handleSortingArr();
   const sortQuantityName = sortingAssetsDataStore();
 
+  console.log(nextPage);
+
   if(nextPage === undefined){
     nextPage = 0;
   }

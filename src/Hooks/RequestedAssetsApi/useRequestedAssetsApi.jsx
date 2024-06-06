@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../AxiousSecureApi/useAxiosSecure";
 import searchTextNameHook from "./searchTextName";
 
-const useRequestedAssetsApi = () => {
+const useRequestedAssetsApi = (pending) => {
   const axiousSecureApi = useAxiosSecure();
 
   const fetchData = async () => {
@@ -10,6 +10,7 @@ const useRequestedAssetsApi = () => {
     const textName = searchTextNameHook();
     const param = {
       textName,
+      pending
     };
 
     const res = await axiousSecureApi.get(`/requestAssets`, {
