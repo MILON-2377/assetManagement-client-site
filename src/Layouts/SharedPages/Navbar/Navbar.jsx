@@ -15,7 +15,7 @@ const Navbar = () => {
   const Manager = userData?.Manager;
 
 
-  console.log(Manager);
+  // console.log(Manager);
 
   useEffect(() => {
     refetch();

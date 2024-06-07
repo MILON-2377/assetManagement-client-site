@@ -3,8 +3,10 @@ import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLo
 import affiliatedUsers from "../../../Hooks/UsersDataLoadApi/unAffiliatedUsersDataStore";
 import makeUsersEmployee from "../../../Hooks/UsersDataLoadApi/makeUsersEmployee";
 import useMakeUsersToEmployee from "../../../Hooks/UsersDataLoadApi/useMakeUsersToEmployee";
+import { useLocation } from "react-router-dom";
 
 const AddAnEmployee = () => {
+  const location = useLocation();
   const [isLimitActive, setIsLimitActive] = useState(false);
   const [userData, refetch] = useUserDataLoadingApi();
   const [selectEmpoyee, setSelectEmployee] = useState([]);
@@ -13,19 +15,20 @@ const AddAnEmployee = () => {
   const { employees,userdata } = userData;
 
   // console.log(userdata);
-  // console.log();
+  // console.log(location);
 
 
   useEffect(() => {
     affiliatedUsers("affiliated");
-  }, []);
+    refetch();
+  }, [(location.pathname === "/addAnEmployee")]);
 
   //   make the user to employee
   const handleMakeEmployee = (id) => {
     const inFo = {
       companyName: userdata?.companyName,
       companyLogo: userdata?.companyLogo,
-      companyId: userdata?._id,
+      companyId: userdata.email,
     }
     makeUsersEmployee({...inFo,id});
     makeEmployee()
@@ -43,7 +46,7 @@ const AddAnEmployee = () => {
       const inFo = {
         companyName: userdata?.companyName,
         companyLogo: userdata?.companyLogo,
-        companyId: userdata?._id,
+        companyId: userdata?.email,
       }
 
       makeUsersEmployee({...inFo,selectEmpoyee});
@@ -51,6 +54,7 @@ const AddAnEmployee = () => {
       makeEmployee()
       .then(res => {
         console.log(res);
+        setSelectEmployee([]);
         refetch();
       })
       .catch(error => {
@@ -70,13 +74,13 @@ const AddAnEmployee = () => {
               <h2 className="text-xl font-Poppins font-bold">
                 Current Empoyees :
               </h2>
-              <p className=" ml-2 text-yellow-500 text-xl ">0</p>
+              <p className=" ml-2 text-yellow-500 text-xl ">{userdata?.currentEmployees}</p>
             </div>
             <div className="flex items-center">
               <h2 className="text-xl font-Poppins font-bold">
                 Package Limit :
               </h2>
-              <p className="text-yellow-500 ml-2 text-xl ">0</p>
+              <p className="text-yellow-500 ml-2 text-xl ">{userdata?.packagesLimit}</p>
             </div>
           </div>
           <div>
