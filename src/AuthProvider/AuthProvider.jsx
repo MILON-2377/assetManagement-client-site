@@ -9,12 +9,14 @@ import {
 import { createContext, useEffect, useState } from "react";
 import auth from "../FirebaseAuth/Firebase.Config";
 import isUserLoggedIN from "../Hooks/UsersDataLoadApi/isUserLoggedIn";
+import usePublicApi from "../Hooks/PublicApi/usePublicApi";
 
 export const authContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const publicApi = usePublicApi();
 
   const userRegister = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -38,10 +40,25 @@ const AuthProvider = ({ children }) => {
     const unSubScribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        const userEmail = currentUser.email;
+
+        // token
+        publicApi.post("/jwt", {userEmail})
+        .then(res => {
+          const token = res.data.token;
+          if(token){
+            localStorage.setItem("userToken", token);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
         setLoading(false);
         isUserLoggedIN(currentUser);
       } else {
         setUser(null);
+        localStorage.removeItem("userToken");
       }
     });
 
