@@ -9,12 +9,12 @@ import {
 import { createContext, useEffect, useState } from "react";
 import auth from "../FirebaseAuth/Firebase.Config";
 import isUserLoggedIN from "../Hooks/UsersDataLoadApi/isUserLoggedIn";
-import isManagerHandle from "../Hooks/UsersDataLoadApi/isManager";
 
 export const authContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const userRegister = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
     const unSubScribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setLoading(false);
         isUserLoggedIN(currentUser);
       } else {
         setUser(null);
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const authInfo = { userRegister, userLogIn, googleLogIn, user, logOut};
+  const authInfo = { userRegister, userLogIn, googleLogIn, user, logOut, loading};
 
   return (
     <authContext.Provider value={authInfo}>{children}</authContext.Provider>

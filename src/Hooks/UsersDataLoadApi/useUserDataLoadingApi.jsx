@@ -3,7 +3,7 @@ import useAxiosSecure from "../AxiousSecureApi/useAxiosSecure";
 import useAuthProvider from "../AuthProviderHooks/useAuthProvider";
 import affiliatedUsers from "./unAffiliatedUsersDataStore";
 
-const useUserDataLoadingApi = () => {
+const useUserDataLoadingApi = (name) => {
   const axiousSecureApi = useAxiosSecure();
   const { user } = useAuthProvider();
 
@@ -20,6 +20,7 @@ const useUserDataLoadingApi = () => {
       params: {
         userEmail: userArrr[0],
         affiliated,
+        userPending:name
       },
     });
     return res.data;

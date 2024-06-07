@@ -13,6 +13,7 @@ import MyRequestedAssets from "../Layouts/JoinAsAnEmployee/MyRequestedAssetPage/
 import PrinteRequestAsset from "../Layouts/JoinAsAnEmployee/MyRequestedAssetPage/PrinteRequestAsset";
 import AddAnEmployee from "../Layouts/JoinAsAnHRManager/AddAnEmployeePage/AddAnEmployee";
 import MyEmployeeList from "../Layouts/JoinAsAnHRManager/MyEmployeeList/MyEmployeeList";
+import ProtectiveRoute from "./PrivateRoute/ProtectiveRoute";
 
 const router = createBrowserRouter([
     {
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/requestForAssets",
-                element: <RequestForAnAssets></RequestForAnAssets>
+                element: <ProtectiveRoute><RequestForAnAssets></RequestForAnAssets></ProtectiveRoute>
             },
             {
                 path: "/addAnAsset",

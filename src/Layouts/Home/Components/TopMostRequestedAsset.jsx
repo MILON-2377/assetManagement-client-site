@@ -46,7 +46,7 @@ const TopMostRequestedAsset = () => {
             <div className=" px-3 py-2 text-blue-800 ">Product Quantity</div>
             <div className=" px-3 py-2 text-blue-800 ">Product Category</div>
           </div>
-          <div className="w-full font-Poppins h-[320px] py-5 px-3 text-purple-600 rounded-lg shadow-2xl bg-base-100 flex flex-col gap-2  ">
+          <div className="w-full overflow-y-scroll font-Poppins h-[320px] py-5 px-3 text-purple-600 rounded-lg shadow-2xl bg-base-100 flex flex-col gap-2  ">
             {assetsData?.map((item) => (
               <>
                 <div key={item._id} className="grid grid-cols-3">

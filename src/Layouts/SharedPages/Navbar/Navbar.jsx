@@ -8,14 +8,13 @@ import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLo
 import { useEffect } from "react";
 
 const Navbar = () => {
-  const { logOut, user } = useAuthProvider();
+  const { logOut, user, loading } = useAuthProvider();
   const [userData, refetch] = useUserDataLoadingApi();
   // const Manager = true;
 
   const Manager = userData?.Manager;
 
-
-  // console.log(Manager);
+  // console.log(userData);
 
   useEffect(() => {
     refetch();
@@ -56,13 +55,16 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-4 shadow bg-base-100 gap-2 rounded-box w-52"
           >
-            {user && Manager ? (
+            {  (user && Manager) ? (
               <>
                 <HRManager></HRManager>
                 <HRmanagerNavlinks></HRmanagerNavlinks>
               </>
             ) : user ? (
-              <></>
+              <>
+              <Employee></Employee>
+                <EmployeeNavlinks></EmployeeNavlinks>
+              </>
             ) : (
               <>
                 <NavLink
@@ -195,9 +197,9 @@ const Navbar = () => {
                       <span className="badge">New</span>
                     </a>
                   </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
+                  <NavLink to="/myRequestedAssets">
+                    <li>My requested assets</li>
+                  </NavLink>
                   <li onClick={handleUsrLogOut}>
                     <a>Logout</a>
                   </li>

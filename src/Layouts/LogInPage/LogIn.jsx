@@ -40,8 +40,8 @@ const LogIn = () => {
         const Affiliated = "not affiliated";
         const memberType = "Normal employee";
         const companyName = "";
-        const companyLogoImage = "";
-        const userInfo = { fullName, email, Manager, Affiliated, memberType, companyLogoImage, companyName };
+        const companyLogo = "";
+        const userInfo = { fullName, email, Manager, Affiliated, memberType, companyLogo, companyName };
         handleUserRegisterData(userInfo);
         userRegisterWithGoogle()
         .then(() => {

@@ -13,7 +13,7 @@ const MyEmployeeList = () => {
 
   const location = useLocation();
 
-  const { employees, userdata } = userData;
+  const { myEmployees, userdata } = userData;
 
 //   console.log(employees);
 
@@ -76,7 +76,7 @@ const MyEmployeeList = () => {
             </tr>
           </thead>
           <tbody>
-            {employees?.map((item, index) => (
+            {myEmployees?.map((item, index) => (
               <>
                 <tr key={index}>
                   <td>

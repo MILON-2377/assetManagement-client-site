@@ -36,7 +36,7 @@ const JoinAnEmployee = () => {
         handleUserRegisterData(usersData);
         registerUser()
           .then((res) => {
-            // console.log(res);
+            console.log(res);
             if (res.acknowledged) {
               Swal.fire({
                 title: `Hello ${fullName}!`,

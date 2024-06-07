@@ -14,6 +14,7 @@ const HRmanagerNavlinks = () => {
         <li>All Requests</li>
       </NavLink>
       <NavLink
+      to='/customRequest'
         className={({ isActive }) =>
           isActive
             ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "

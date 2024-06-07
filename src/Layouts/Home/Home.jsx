@@ -5,6 +5,9 @@ import Banner from "./Banner/Banner";
 import AllPendingAssetRequest from "./Components/AllPendingAssetRequest";
 import TopMostRequestedAsset from "./Components/TopMostRequestedAsset";
 import sortingAssetsDataStore from "../../Hooks/HandleSortingAssetsData/sortingAssetsData";
+import MyPendingRequest from "../JoinAsAnEmployee/MyPendingRequest/MyPendingRequest";
+import MyMonthlyRequest from "../JoinAsAnEmployee/MyMonthlyRequest/MyMonthlyRequest";
+import TrackYourProgres from "../JoinAsAnEmployee/TrackYourProgress/TrackYourProgres";
 
 const Home = () => {
   const { user } = useAuthProvider();
@@ -34,7 +37,11 @@ const Home = () => {
             </div>
           </>
         ) : user ? (
-          <></>
+          <>
+          <MyPendingRequest></MyPendingRequest>
+          <MyMonthlyRequest></MyMonthlyRequest>
+          <TrackYourProgres></TrackYourProgres>
+          </>
         ) : (
           <>
             <div>
