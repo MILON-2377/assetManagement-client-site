@@ -12,9 +12,10 @@ const Navbar = () => {
   const [userData, refetch] = useUserDataLoadingApi();
   // const Manager = true;
 
-  const { Manager } = userData.user;
+  const Manager = userData?.Manager;
 
-  // console.log(userData.user);
+
+  console.log(Manager);
 
   useEffect(() => {
     refetch();

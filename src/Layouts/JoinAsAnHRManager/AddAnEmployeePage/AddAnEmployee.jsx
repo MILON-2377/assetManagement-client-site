@@ -7,12 +7,14 @@ import useMakeUsersToEmployee from "../../../Hooks/UsersDataLoadApi/useMakeUsers
 const AddAnEmployee = () => {
   const [isLimitActive, setIsLimitActive] = useState(false);
   const [userData, refetch] = useUserDataLoadingApi();
-  const [selectEmpoyee, setSelectEmployee] = useState({});
+  const [selectEmpoyee, setSelectEmployee] = useState([]);
   const makeEmployee = useMakeUsersToEmployee();
 
-  const { employees } = userData;
+  const { employees,userdata } = userData;
 
-  //   console.log(employees);
+  // console.log(userdata);
+  // console.log();
+
 
   useEffect(() => {
     affiliatedUsers("affiliated");
@@ -20,16 +22,41 @@ const AddAnEmployee = () => {
 
   //   make the user to employee
   const handleMakeEmployee = (id) => {
-    makeUsersEmployee(id);
+    const inFo = {
+      companyName: userdata?.companyName,
+      companyLogo: userdata?.companyLogo,
+      companyId: userdata?._id,
+    }
+    makeUsersEmployee({...inFo,id});
     makeEmployee()
       .then((res) => {
         console.log(res);
+        refetch();
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+    // selected users to make employee
+    const handleSelectUers = () => {
+      const inFo = {
+        companyName: userdata?.companyName,
+        companyLogo: userdata?.companyLogo,
+        companyId: userdata?._id,
+      }
+
+      makeUsersEmployee({...inFo,selectEmpoyee});
+
+      makeEmployee()
+      .then(res => {
+        console.log(res);
+        refetch();
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
 
   return (
     <div>
@@ -132,7 +159,7 @@ const AddAnEmployee = () => {
                 <>
                   <tr key={index}>
                     <th>
-                      <label >
+                      <label onChange={() => setSelectEmployee([...selectEmpoyee, item.email ]) } >
                         <input type="checkbox" className="checkbox" />
                       </label>
                     </th>
@@ -159,7 +186,7 @@ const AddAnEmployee = () => {
 
                     <th>
                       <button
-                        onClick={() => handleMakeEmployee(item._id)}
+                        onClick={() => handleMakeEmployee(item.email)}
                         className="btn btn-ghost btn-xs"
                       >
                         {" "}
@@ -171,6 +198,10 @@ const AddAnEmployee = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="w-full flex items-center justify-center">
+          <button onClick={handleSelectUers} className="btn">Add selected employee</button>
         </div>
       </div>
     </div>

@@ -7,8 +7,8 @@ const useMakeUsersToEmployee = () => {
     const axiousSecureApi = useAxiosSecure();
 
     const handleUsersToEmployee = () =>  {
-
         const ids = makeUsersEmployee();
+
         return axiousSecureApi.put("/users", {ids});
     }
 
