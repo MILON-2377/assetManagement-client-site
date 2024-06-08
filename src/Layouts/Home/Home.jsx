@@ -8,6 +8,7 @@ import sortingAssetsDataStore from "../../Hooks/HandleSortingAssetsData/sortingA
 import MyPendingRequest from "../JoinAsAnEmployee/MyPendingRequest/MyPendingRequest";
 import MyMonthlyRequest from "../JoinAsAnEmployee/MyMonthlyRequest/MyMonthlyRequest";
 import TrackYourProgres from "../JoinAsAnEmployee/TrackYourProgress/TrackYourProgres";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const { user } = useAuthProvider();
@@ -22,6 +23,11 @@ const Home = () => {
 
   return (
     <div>
+
+    <Helmet>
+      <title>Home || AssetTrackr</title>
+    </Helmet>
+
       {/* banner section */}
       <Banner></Banner>
 

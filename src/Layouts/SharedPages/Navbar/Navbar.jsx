@@ -130,7 +130,7 @@ const Navbar = () => {
       {/*  */}
       {/* logo and name section */}
       <div>
-        <a className="btn btn-ghost text-2xl">daisyUI</a>
+        <a className="btn btn-ghost text-2xl">AssetTrackr</a>
       </div>
 
       <div className="navbar-center hidden lg:flex">

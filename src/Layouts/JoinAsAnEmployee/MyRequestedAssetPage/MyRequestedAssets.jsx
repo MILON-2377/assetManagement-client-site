@@ -39,7 +39,7 @@ const MyRequestedAssets = () => {
     refetch();
   };
 
-  // console.log(myRequestedData);
+  console.log(myRequestedData);
 
   const handleReturnAsset = (id) => {
     // console.log(id === "665b55f5e7d2b2d8f03f6b27")

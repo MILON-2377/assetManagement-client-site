@@ -6,6 +6,7 @@ import searhTextUpdate from "../../../Hooks/AssetsSearchApi/searchTextUpdataStat
 import { useState } from "react";
 import handlePaginationPage from "../../../Hooks/PaginationCount/paginationPage";
 import handleSortingArr from "../../../Hooks/AssetsDataSorting/assetsSorting";
+import { Helmet } from "react-helmet-async";
 
 const RequestForAnAssets = () => {
   const [pages, setPages] = useState(0);
@@ -57,6 +58,11 @@ const RequestForAnAssets = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          Request for asset || AssetTrackr
+        </title>
+      </Helmet>
       {/* assets search and filter sections 
         TODO: Search and filter items functinality should apply on the server side
         */}

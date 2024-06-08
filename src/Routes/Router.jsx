@@ -14,6 +14,7 @@ import PrinteRequestAsset from "../Layouts/JoinAsAnEmployee/MyRequestedAssetPage
 import AddAnEmployee from "../Layouts/JoinAsAnHRManager/AddAnEmployeePage/AddAnEmployee";
 import MyEmployeeList from "../Layouts/JoinAsAnHRManager/MyEmployeeList/MyEmployeeList";
 import ProtectiveRoute from "./PrivateRoute/ProtectiveRoute";
+import PaymentGateWay from "../Layouts/PaymentGatway/PaymentGateWay";
 
 const router = createBrowserRouter([
     {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
             {
                 path: "/myEmpoyeeList",
                 element: <MyEmployeeList></MyEmployeeList>
+            },
+            {
+                path: "/payment",
+                element: <PaymentGateWay></PaymentGateWay>
             }
         ]
     }
