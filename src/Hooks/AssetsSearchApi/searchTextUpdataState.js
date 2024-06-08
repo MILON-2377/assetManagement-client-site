@@ -9,6 +9,7 @@ const searhTextUpdate = (name) => {
     }
   }
 
+  // console.log(assetNames);
   return assetNames[0];
 };
 

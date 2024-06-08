@@ -16,7 +16,7 @@ const MyRequestedAssets = () => {
   const userLogger = isUserLoggedIN();
 
   useEffect(() => {
-    console.log(userLogger)
+    console.log(userLogger);
     refetch();
   }, [user, userLogger]);
 
@@ -60,8 +60,9 @@ const MyRequestedAssets = () => {
   };
 
   return (
-    <div>
-      <div className="w-full flex items-center gap-5 justify-between">
+    <div className=" w-[95%] mx-auto ">
+      {/* searh bar and filter section */}
+      <div className="w-full flex items-center z-10 border border-base-200 gap-5 sticky top-1 bg-base-200 h-20 px-4 py-3 justify-between">
         {/* search section to search items by its names */}
         <div className="w-full">
           <form
@@ -88,7 +89,7 @@ const MyRequestedAssets = () => {
                 />
               </svg>
             </label>
-            <button className="btn">Search</button>
+            <button className="btn bg-black text-white ">Search</button>
           </form>
         </div>
 
@@ -110,9 +111,9 @@ const MyRequestedAssets = () => {
       </div>
 
       {/* assets displaying section */}
-      <section>
-        <div className="overflow-x-auto">
-          <table className="table">
+      <section className="mt-10 w-full ">
+        <div className="overflow-x-auto w-full ">
+          <table className="table w-full ">
             {/* head */}
             <thead>
               <tr>
@@ -155,10 +156,16 @@ const MyRequestedAssets = () => {
                               </>
                             )) ||
                               (item?.requestStatus.toLowerCase() ===
-                              "approved" && (item?.assetType.toLowerCase() === "returnable" || item?.assetType.toLowerCase() === "returned" ) ? (
+                                "approved" &&
+                              (item?.assetType.toLowerCase() === "returnable" ||
+                                item?.assetType.toLowerCase() ===
+                                  "returned") ? (
                                 <>
                                   <button
-                                    disabled={item?.assetType.toLowerCase() === "returned" && true }
+                                    disabled={
+                                      item?.assetType.toLowerCase() ===
+                                        "returned" && true
+                                    }
                                     onClick={() => handleReturnAsset(item._id)}
                                     className="btn"
                                   >
@@ -167,7 +174,9 @@ const MyRequestedAssets = () => {
                                 </>
                               ) : (
                                 <>
-                                  <Link to='/printeAssetPage' className="btn">Printe Asset</Link>
+                                  <Link to="/printeAssetPage" className="btn">
+                                    Printe Asset
+                                  </Link>
                                 </>
                               ))}
                           </>

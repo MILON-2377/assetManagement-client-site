@@ -57,7 +57,7 @@ const RequestForAnAssets = () => {
   // console.log(resultData);
 
   return (
-    <div>
+    <div className=" w-full mx-auto mt-5 ">
       <Helmet>
         <title>
           Request for asset || AssetTrackr
@@ -66,7 +66,7 @@ const RequestForAnAssets = () => {
       {/* assets search and filter sections 
         TODO: Search and filter items functinality should apply on the server side
         */}
-      <div className=" w-full flex items-center gap-4 justify-evenly">
+      <div className=" w-full px-8 py-5 border border-base-200 bg-base-200 sticky top-0 z-10 flex items-center gap-4 justify-evenly">
         {/* search section */}
         <fieldset className="w-full space-y-1 text-gray-100">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -119,7 +119,7 @@ const RequestForAnAssets = () => {
         {/* assets filter section */}
         <select onChange={handleSortingData} className="select select-primary w-full max-w-xs">
           <option disabled selected>
-            What is the best TV show?
+           Filter assets by...
           </option>
           <option>Available</option>
           <option>Not-available</option>
@@ -129,7 +129,7 @@ const RequestForAnAssets = () => {
       </div>
 
       {/* assets list section */}
-      <section className="grid font-Poppins grid-cols-2 lg:grid-cols-4 ">
+      <section className="grid mt-5 w-[95%] mx-auto font-Poppins grid-cols-2 lg:grid-cols-4 ">
         {assetsData?.map((item) => (
           <AssetsDisplayCompo
             key={item._id}

@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
     <div className="navbar font-Poppins flex items-center justify-evenly bg-base-100">
       <div className="navbar-start lg:hidden ">
-        <div className="dropdown">
+        <div className="dropdown ">
           {/* this is for medium devices */}
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -63,7 +63,8 @@ const Navbar = () => {
             ) : user ? (
               <>
               <Employee></Employee>
-                <EmployeeNavlinks></EmployeeNavlinks>
+              <EmployeeNavlinks></EmployeeNavlinks>
+              
               </>
             ) : (
               <>
@@ -156,11 +157,9 @@ const Navbar = () => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
+                  {/* /employeProfile */}
                   <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
+                    <Link to='/employeProfile'>Profile</Link>
                   </li>
                   <li>
                     <a>Settings</a>
@@ -244,10 +243,7 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </a>
+                  <Link to='/employeProfile'>Profile</Link>
                 </li>
                 <li>
                   <a>Settings</a>

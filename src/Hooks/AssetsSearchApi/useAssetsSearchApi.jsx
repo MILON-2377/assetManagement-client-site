@@ -11,13 +11,13 @@ const useAssetsSearchApi = () => {
   const axiousSecures = useAxiosSecure();
 
 
-const fetchAssets = async (searchText) => {
+const fetchAssets = async () => {
   const searchName = searhTextUpdate();
   let nextPage = handlePaginationPage();
   const sortingName = handleSortingArr();
   const sortQuantityName = sortingAssetsDataStore();
 
-  // console.log(nextPage);
+  // console.log(searchName);
 
   if(nextPage === undefined){
     nextPage = 0;
@@ -28,11 +28,9 @@ const fetchAssets = async (searchText) => {
     nextPage,
     sortingName,
     sortQuantityName,
+    searchText: searchName
   };
 
-  if(searchText){
-    params.searchName = searchName;
-  }
 
   const res = await axiousSecures.get("/assets", {params});
   return res.data;

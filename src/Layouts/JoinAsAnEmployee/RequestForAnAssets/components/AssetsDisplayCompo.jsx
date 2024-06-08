@@ -72,7 +72,7 @@ const AssetsDisplayCompo = ({ assetsData }) => {
   };
 
   return (
-    <div className=" h-[400px] bg-base-200 px-4 py-4 flex flex-col justify-between ">
+    <div className=" h-[400px] px-4 py-4 flex flex-col justify-between ">
       <div className="w-full h-[220px] ">
         <img src={assetImage} className="w-full h-full object-cover " />
       </div>

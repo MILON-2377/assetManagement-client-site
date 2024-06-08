@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../FirebaseAuth/Firebase.Config";
@@ -33,8 +34,6 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-
-
   // is user active
   useEffect(() => {
     const unSubScribe = onAuthStateChanged(auth, (currentUser) => {
@@ -43,16 +42,17 @@ const AuthProvider = ({ children }) => {
         const userEmail = currentUser.email;
 
         // token
-        publicApi.post("/jwt", {userEmail})
-        .then(res => {
-          const token = res.data.token;
-          if(token){
-            localStorage.setItem("userToken", token);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        })
+        publicApi
+          .post("/jwt", { userEmail })
+          .then((res) => {
+            const token = res.data.token;
+            if (token) {
+              localStorage.setItem("userToken", token);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
 
         setLoading(false);
         isUserLoggedIN(currentUser);
@@ -71,7 +71,22 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const authInfo = { userRegister, userLogIn, googleLogIn, user, logOut, loading};
+  // update profile
+  const handleUpdateProfile = (name) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+    });
+  };
+
+  const authInfo = {
+    userRegister,
+    userLogIn,
+    googleLogIn,
+    user,
+    logOut,
+    loading,
+    handleUpdateProfile
+  };
 
   return (
     <authContext.Provider value={authInfo}>{children}</authContext.Provider>

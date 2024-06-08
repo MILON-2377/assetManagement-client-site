@@ -15,6 +15,7 @@ import AddAnEmployee from "../Layouts/JoinAsAnHRManager/AddAnEmployeePage/AddAnE
 import MyEmployeeList from "../Layouts/JoinAsAnHRManager/MyEmployeeList/MyEmployeeList";
 import ProtectiveRoute from "./PrivateRoute/ProtectiveRoute";
 import PaymentGateWay from "../Layouts/PaymentGatway/PaymentGateWay";
+import EmployeeProfile from "../Layouts/JoinAsAnEmployee/EmployeeProfile/EmployeeProfile";
 
 const router = createBrowserRouter([
     {
@@ -76,6 +77,12 @@ const router = createBrowserRouter([
             {
                 path: "/payment",
                 element: <PaymentGateWay></PaymentGateWay>
+            },
+
+            // employee profile
+            {
+                path: "/employeProfile",
+                element: <EmployeeProfile></EmployeeProfile>
             }
         ]
     }
