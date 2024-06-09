@@ -6,19 +6,28 @@ import HRmanagerNavlinks from "./HRmanager/components/HRmanagerNavlinks";
 import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
 import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 import { useEffect } from "react";
+import isLoading from "../../../Hooks/Loading/loading";
 
 const Navbar = () => {
-  const { logOut, user, loading } = useAuthProvider();
+  const { logOut, user } = useAuthProvider();
   const [userData, refetch] = useUserDataLoadingApi();
-  // const Manager = true;
 
-  const Manager = userData?.Manager;
+  const userPower = userData?.userType;
 
-  // console.log(userData);
+  // console.log(userPower);
+  const loading = isLoading();
 
   useEffect(() => {
+    isLoading(true);
+    if (userPower) {
+      isLoading(false);
+    }
     refetch();
   }, [user]);
+
+  if (userPower) {
+    isLoading(false);
+  }
 
   const handleUsrLogOut = () => {
     logOut()
@@ -55,16 +64,56 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-4 shadow bg-base-100 gap-2 rounded-box w-52"
           >
-            {  (user && Manager) ? (
+            {loading ? (
               <>
-                <HRManager></HRManager>
-                <HRmanagerNavlinks></HRmanagerNavlinks>
+                <>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
+                        : " px-3 py-2  rounded-md text-black "
+                    }
+                  >
+                    <li>Home</li>
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
+                        : " px-3 py-2  rounded-md text-black "
+                    }
+                    to="/joinAnEmployee"
+                  >
+                    <li>Join as Employee</li>
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
+                        : " px-3 py-2  rounded-md text-black "
+                    }
+                    to="/joinAnHRManager"
+                  >
+                    <li>Join as HR Manager</li>
+                  </NavLink>
+                </>
               </>
             ) : user ? (
               <>
-              <Employee></Employee>
-              <EmployeeNavlinks></EmployeeNavlinks>
-              
+                {userPower === "Manager" ? (
+                  <>
+                    <HRManager></HRManager>
+                    <HRmanagerNavlinks></HRmanagerNavlinks>
+                  </>
+                ) : (
+                  userPower === "Employee" && (
+                    <>
+                      <Employee></Employee>
+                      <EmployeeNavlinks></EmployeeNavlinks>
+                    </>
+                  )
+                )}
               </>
             ) : (
               <>
@@ -107,13 +156,18 @@ const Navbar = () => {
       {/* this title section is for larges device */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu flex items-center justify-center gap-5 menu-horizontal px-1">
-          {user && Manager ? (
+          {user ? (
             <>
-              <HRManager></HRManager>
-            </>
-          ) : user ? (
-            <>
-              <Employee></Employee>
+              {(userPower === "Manager" && (
+                <>
+                  <HRManager></HRManager>
+                </>
+              )) ||
+                (userPower === "Employee" && (
+                  <>
+                    <Employee></Employee>
+                  </>
+                ))}
             </>
           ) : (
             <>
@@ -136,74 +190,79 @@ const Navbar = () => {
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu font-Poppins flex items-center justify-center gap-5 menu-horizontal px-1">
-          {user && Manager ? (
+          {user ? (
             <>
-              <HRmanagerNavlinks></HRmanagerNavlinks>
-
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      src={user?.photoURL}
-                    />
+              {userPower === "Manager" ? (
+                <>
+                  <HRmanagerNavlinks></HRmanagerNavlinks>
+                  <div className="dropdown dropdown-end">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn btn-ghost btn-circle avatar"
+                    >
+                      <div className="w-10 rounded-full">
+                        <img
+                          alt="Tailwind CSS Navbar component"
+                          src={user?.photoURL}
+                        />
+                      </div>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                      {/* /employeProfile */}
+                      <li>
+                        <Link to="/employeProfile">Profile</Link>
+                      </li>
+                      <li>
+                        <a>Settings</a>
+                      </li>
+                      <li onClick={handleUsrLogOut}>
+                        <a>Logout</a>
+                      </li>
+                    </ul>
                   </div>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  {/* /employeProfile */}
-                  <li>
-                    <Link to='/employeProfile'>Profile</Link>
-                  </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
-                  <li onClick={handleUsrLogOut}>
-                    <a>Logout</a>
-                  </li>
-                </ul>
-              </div>
-            </>
-          ) : user ? (
-            <>
-              <EmployeeNavlinks></EmployeeNavlinks>
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      src={user?.photoURL}
-                    />
-                  </div>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
-                  <NavLink to="/myRequestedAssets">
-                    <li>My requested assets</li>
-                  </NavLink>
-                  <li onClick={handleUsrLogOut}>
-                    <a>Logout</a>
-                  </li>
-                </ul>
-              </div>
+                </>
+              ) : (
+                userPower === "Employee" && (
+                  <>
+                    <EmployeeNavlinks></EmployeeNavlinks>
+                    <div className="dropdown dropdown-end">
+                      <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-ghost btn-circle avatar"
+                      >
+                        <div className="w-10 rounded-full">
+                          <img
+                            alt="Tailwind CSS Navbar component"
+                            src={user?.photoURL}
+                          />
+                        </div>
+                      </div>
+                      <ul
+                        tabIndex={0}
+                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                      >
+                        <li>
+                          <a className="justify-between">
+                            Profile
+                            <span className="badge">New</span>
+                          </a>
+                        </li>
+                        <NavLink to="/myRequestedAssets">
+                          <li>My requested assets</li>
+                        </NavLink>
+                        <li onClick={handleUsrLogOut}>
+                          <a>Logout</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </>
+                )
+              )}
             </>
           ) : (
             <>
@@ -243,7 +302,7 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <Link to='/employeProfile'>Profile</Link>
+                  <Link to="/employeProfile">Profile</Link>
                 </li>
                 <li>
                   <a>Settings</a>

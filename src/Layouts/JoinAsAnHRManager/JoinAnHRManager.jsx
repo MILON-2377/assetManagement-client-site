@@ -15,18 +15,18 @@ const JoinAnHRManager = () => {
     // console.log(data);
     const { email, password, dateOfBirth, fullName, companyLogo, companyName } =
       data;
-    const Manager = true;
+    const userType = "Manager";
     const userData = {
       fullName,
       email,
       dateOfBirth,
       companyLogo,
       companyName,
-      Manager,
+      userType,
     };
 
     userRegister(email, password)
-      .then((res) => {
+      .then(() => {
         handleUserRegisterData(userData);
         registerUser()
           .then((res) => {
@@ -56,94 +56,107 @@ const JoinAnHRManager = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div
+      style={{
+        backgroundImage:
+          "url('https://img.freepik.com/premium-vector/add-user-concept-illustration_86047-676.jpg?w=900')",
+      }}
+      className="hero min-h-screen bg-cover bg-center bg-no-repeat bg-base-200"
+    >
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
+          <h1 className="text-5xl font-bold">HR Manager Registration</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Welcome to the HR Manager Registration page. Join our team of
+            dedicated professionals and lead with excellence. Complete the form
+            below to get started on your journey towards making a significant
+            impact in our organization.
           </p>
         </div>
-        <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="card h-[500px] shrink-0 w-full lg:max-w-[60%] shadow-2xl bg-base-100">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Full Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="full name"
-                {...register("fullName", { required: true })}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Company Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="company name"
-                {...register("companyName", { required: true })}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Company Logo</span>
-              </label>
-              <input
-                type="text"
-                placeholder="logo URL"
-                {...register("companyLogo", { required: true })}
-                className="input input-bordered"
-                required
-              />
-            </div>
+            <div className="flex gap-5 h-full items-center justify-between w-full ">
+              <div className="w-full ">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Full Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="full name"
+                    {...register("fullName", { required: true })}
+                    className="input w-full input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Company Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="company name"
+                    {...register("companyName", { required: true })}
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Company Logo</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="logo URL"
+                    {...register("companyLogo", { required: true })}
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+              </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="email"
-                {...register("email", { required: true })}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="password"
-                {...register("password", { required: true })}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Date of birth</span>
-              </label>
-              <input
-                type="date"
-                {...register("dateOfBirth", { required: true })}
-                className="input input-bordered"
-                required
-              />
-              {/* <label className="label">
+              <div className="w-full ">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="email"
+                    {...register("email", { required: true })}
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Password</span>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="password"
+                    {...register("password", { required: true })}
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Date of birth</span>
+                  </label>
+                  <input
+                    type="date"
+                    {...register("dateOfBirth", { required: true })}
+                    className="input input-bordered"
+                    required
+                  />
+                  {/* <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
                   Forgot password?
                 </a>
               </label> */}
+                </div>
+              </div>
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary">Sign Up</button>

@@ -1,15 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import handleUserRegisterData from "../../Hooks/UsersRegister/userRegisterData";
-import useUserRegister from "../../Hooks/UsersRegister/useUserRegister";
+import useUserDataLoadingApi from "../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 
 const LogIn = () => {
   const { userLogIn, googleLogIn } = useAuthProvider();
-
   const { register, handleSubmit, reset } = useForm();
-  const userRegisterWithGoogle = useUserRegister();
+  const [userData] = useUserDataLoadingApi();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from;
+
+  const userPower = userData?.userType;
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -33,23 +36,8 @@ const LogIn = () => {
   // login with google
   const handleGoogleLogIn = () => {
     googleLogIn()
-      .then((res) => {
-        const fullName = res?.user?.displayName;
-        const email = res?.user?.email;
-        const Manager = false;
-        const Affiliated = "not affiliated";
-        const memberType = "Normal employee";
-        const companyName = "";
-        const companyLogo = "";
-        const userInfo = { fullName, email, Manager, Affiliated, memberType, companyLogo, companyName };
-        handleUserRegisterData(userInfo);
-        userRegisterWithGoogle()
-        .then(() => {
-          // console.log(res);
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      .then(() => {
+          navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -57,19 +45,18 @@ const LogIn = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-        </div>
-        <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <div className="form-control">
+    <div
+      style={{
+        backgroundImage:
+          "url('https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?t=st=1717882217~exp=1717885817~hmac=256a9a42014c38669b160ffe9d8944a1b9e8f78db7d95cb67f82182b1a062a46&w=740')",
+      }}
+      className="hero bg-cover bg-no-repeat bg-center min-h-screen bg-base-200"
+    >
+      <div className="hero-content w-[90%] lg:w-[50%] flex-col lg:flex-row-reverse">
+        
+        <div className="card shrink-0 w-full shadow-2xl bg-base-100">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body w-full ">
+            <div className="form-control w-full ">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
@@ -92,14 +79,10 @@ const LogIn = () => {
                 className="input input-bordered"
                 required
               />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
+             
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn bg-black text-white ">Login</button>
             </div>
             <div className="form-control mt-6">
               <button onClick={handleGoogleLogIn} className="btn ">

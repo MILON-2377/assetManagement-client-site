@@ -16,7 +16,7 @@ const MyRequestedAssets = () => {
   const userLogger = isUserLoggedIN();
 
   useEffect(() => {
-    console.log(userLogger);
+    // console.log(userLogger);
     refetch();
   }, [user, userLogger]);
 

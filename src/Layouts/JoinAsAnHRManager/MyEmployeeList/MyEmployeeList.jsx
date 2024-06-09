@@ -39,7 +39,7 @@ const MyEmployeeList = () => {
     }
 
   return (
-    <div>
+    <div className=" w-[95%] mx-auto ">
          <div className="bg-base-200 px-4 py-5 flex flex-col gap-5 ">
         <h1 className=" text-4xl font-semibold  ">
           Employee Management Dashboar

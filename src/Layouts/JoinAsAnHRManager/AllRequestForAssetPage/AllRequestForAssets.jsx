@@ -24,10 +24,10 @@ const AllRequestForAssets = () => {
   return (
     <div className="w-[98%] mx-auto">
       {/* search bar section */}
-      <div>
+      <div className="mt-5">
         <form
           onSubmit={handleSearchAssets}
-          className="flex items-center w-full justify-center gap-2"
+          className="flex items-center px-4 gap-2"
         >
           <label className="input w-full lg:w-[40%] input-bordered flex items-center gap-2">
             <input
@@ -54,7 +54,7 @@ const AllRequestForAssets = () => {
       </div>
 
       {/* displaying all the requested assets */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mt-8 ">
         <table className="table">
           {/* head */}
           <thead>

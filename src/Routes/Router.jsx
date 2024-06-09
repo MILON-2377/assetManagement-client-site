@@ -48,41 +48,41 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addAnAsset",
-                element: <AddAnAsset></AddAnAsset>
+                element: <ProtectiveRoute><AddAnAsset></AddAnAsset></ProtectiveRoute> 
             },
             {
                 path: "/assetList",
-                element: <AssetList></AssetList>
+                element: <ProtectiveRoute><AssetList></AssetList></ProtectiveRoute>
             },
             {
                 path: "/allRequesForAsset",
-                element: <AllRequestForAssets></AllRequestForAssets>
+                element: <ProtectiveRoute><AllRequestForAssets></AllRequestForAssets></ProtectiveRoute>
             },
             {
                 path: "/myRequestedAssets",
-                element: <MyRequestedAssets></MyRequestedAssets>
+                element: <ProtectiveRoute><MyRequestedAssets></MyRequestedAssets></ProtectiveRoute>
             },
             {
                 path: "/printeAssetPage",
-                element: <PrinteRequestAsset></PrinteRequestAsset>
+                element: <ProtectiveRoute><PrinteRequestAsset></PrinteRequestAsset></ProtectiveRoute>
             },
             {
                 path: "/addAnEmployee",
-                element: <AddAnEmployee></AddAnEmployee>
+                element: <ProtectiveRoute><AddAnEmployee></AddAnEmployee></ProtectiveRoute>
             },
             {
                 path: "/myEmpoyeeList",
-                element: <MyEmployeeList></MyEmployeeList>
+                element: <ProtectiveRoute><MyEmployeeList></MyEmployeeList></ProtectiveRoute>
             },
             {
                 path: "/payment",
-                element: <PaymentGateWay></PaymentGateWay>
+                element: <ProtectiveRoute><PaymentGateWay></PaymentGateWay></ProtectiveRoute>
             },
 
             // employee profile
             {
                 path: "/employeProfile",
-                element: <EmployeeProfile></EmployeeProfile>
+                element: <ProtectiveRoute> <EmployeeProfile></EmployeeProfile></ProtectiveRoute>
             }
         ]
     }

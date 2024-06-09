@@ -9,9 +9,8 @@ const JoinAnEmployee = () => {
   const { userRegister, googleLogIn } = useAuthProvider();
   const registerUser = useUserRegister();
 
-  const Manager = false;
+  const userType = "Employee";
   const Affiliated = "not affiliated";
-  const memberType = "Normal employee";
   const companyName = "";
   const companyLogoImage = "";
 
@@ -70,9 +69,8 @@ const JoinAnEmployee = () => {
         const usersRegisterData = {
           fullName,
           email,
-          Manager,
+          userType,
           Affiliated,
-          memberType,
           companyName,
           companyLogoImage,
         };
@@ -109,17 +107,17 @@ const JoinAnEmployee = () => {
 
   return (
     <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row-reverse">
+      <div className="hero-content flex-col lg:flex-row">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
+          <h1 className="text-5xl font-bold">Employee Registration</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Welcome to the Employee Registration page. Join our team and embark
+            on an exciting journey of growth and opportunity. Complete the form
+            below to start your career with us and unlock new possibilities.
           </p>
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body ">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Full Name</span>
@@ -177,7 +175,7 @@ const JoinAnEmployee = () => {
               <button className="btn btn-primary">Sign Up</button>
             </div>
           </form>
-          <div className="form-control mt-6">
+          <div className="form-control px-7 mb-8">
             <button onClick={googleSignUp} className="btn btn-primary">
               Google
             </button>

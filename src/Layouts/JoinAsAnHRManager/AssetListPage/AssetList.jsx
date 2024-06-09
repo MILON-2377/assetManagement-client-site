@@ -20,6 +20,9 @@ const AssetList = () => {
   const onSubmit = (data) => {
     const { assetName } = data;
     searhTextUpdate(assetName);
+    // sortingAssetsDataStore(1);
+    // handleSortingArr(1);
+    // handlePaginationPage(1);
     refetch();
     reset();
   };
@@ -28,6 +31,7 @@ const AssetList = () => {
   const handleSorting = (e) => {
     // console.log(e.target.value);
     handleSortingArr(e.target.value);
+    sortingAssetsDataStore(1);
     refetch();
   };
 
@@ -37,6 +41,7 @@ const AssetList = () => {
       const newPage = pages - 1;
       handlePaginationPage(newPage);
       setPages(newPage);
+      sortingAssetsDataStore(1);
       refetch();
     }
   };
@@ -46,6 +51,7 @@ const AssetList = () => {
       const newPage = pages + 1;
       handlePaginationPage(newPage);
       setPages(newPage);
+      sortingAssetsDataStore(1);
       refetch();
     }
   };
@@ -53,6 +59,7 @@ const AssetList = () => {
   //   console.log(assetsData);
   const handleSortingAsset = (e) => {
     sortingAssetsDataStore(e.target.value);
+    handleSortingArr(1);
     refetch();
   };
 
@@ -98,7 +105,7 @@ const AssetList = () => {
   };
 
   return (
-    <div>
+    <div className=" mt-5 w-[95%] mx-auto ">
       {/* searh bar and sorting section */}
       <div className=" w-full flex items-center gap-4 justify-evenly">
         {/* search section */}

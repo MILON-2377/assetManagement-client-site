@@ -11,6 +11,7 @@ import { createContext, useEffect, useState } from "react";
 import auth from "../FirebaseAuth/Firebase.Config";
 import isUserLoggedIN from "../Hooks/UsersDataLoadApi/isUserLoggedIn";
 import usePublicApi from "../Hooks/PublicApi/usePublicApi";
+import isLoading from "../Hooks/Loading/loading";
 
 export const authContext = createContext(null);
 
@@ -68,6 +69,7 @@ const AuthProvider = ({ children }) => {
   // user logOut
   const logOut = () => {
     // isManagerHandle("LogOut");
+    isLoading(true);
     return signOut(auth);
   };
 

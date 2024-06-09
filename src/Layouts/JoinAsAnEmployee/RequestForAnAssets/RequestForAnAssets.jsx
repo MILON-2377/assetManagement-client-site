@@ -66,7 +66,7 @@ const RequestForAnAssets = () => {
       {/* assets search and filter sections 
         TODO: Search and filter items functinality should apply on the server side
         */}
-      <div className=" w-full px-8 py-5 border border-base-200 bg-base-200 sticky top-0 z-10 flex items-center gap-4 justify-evenly">
+      <div className=" w-full px-8 py-5 border border-base-200  flex items-center gap-4 justify-evenly">
         {/* search section */}
         <fieldset className="w-full space-y-1 text-gray-100">
           <form onSubmit={handleSubmit(onSubmit)}>
