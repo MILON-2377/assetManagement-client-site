@@ -3,12 +3,14 @@ import AssetsDisplayCompo from "./components/AssetsDisplayCompo";
 import useAssetsSearchApi from "../../../Hooks/AssetsSearchApi/useAssetsSearchApi";
 import { useForm } from "react-hook-form";
 import searhTextUpdate from "../../../Hooks/AssetsSearchApi/searchTextUpdataState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import handlePaginationPage from "../../../Hooks/PaginationCount/paginationPage";
 import handleSortingArr from "../../../Hooks/AssetsDataSorting/assetsSorting";
 import { Helmet } from "react-helmet-async";
+import useAuthProvider from "../../../Hooks/AuthProviderHooks/useAuthProvider";
 
 const RequestForAnAssets = () => {
+  const { user, Loading } = useAuthProvider();
   const [pages, setPages] = useState(0);
   const [resultData, refetch] = useAssetsSearchApi();
 
@@ -16,6 +18,12 @@ const RequestForAnAssets = () => {
   const totalPages = Math.ceil(total / 10);
 
   const { register, handleSubmit, reset } = useForm();
+
+  // console.log(Loading);
+
+  useEffect(() => {
+    refetch();
+  }, [user]);
 
   // handle search data base on searh text
   const onSubmit = (data) => {
@@ -26,9 +34,9 @@ const RequestForAnAssets = () => {
     reset();
   };
 
-  // handle pagination next page 
+  // handle pagination next page
   const handleNextPage = () => {
-    if (totalPages - 1> pages) {
+    if (totalPages - 1 > pages) {
       const newPage = pages + 1;
       handlePaginationPage(newPage);
       setPages(newPage);
@@ -52,91 +60,106 @@ const RequestForAnAssets = () => {
     handleSortingArr(e.target.value);
     searhTextUpdate(1);
     refetch();
-  }
+  };
 
   // console.log(resultData);
 
   return (
     <div className=" w-full mx-auto mt-5 ">
       <Helmet>
-        <title>
-          Request for asset || AssetTrackr
-        </title>
+        <title>Request for asset || AssetTrackr</title>
       </Helmet>
-      {/* assets search and filter sections 
-        TODO: Search and filter items functinality should apply on the server side
-        */}
-      <div className=" w-full px-8 py-5 border border-base-200  flex items-center gap-4 justify-evenly">
-        {/* search section */}
-        <fieldset className="w-full space-y-1 text-gray-100">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="Search" className="hidden">
-              Search
-            </label>
-            <div className="relative w-full ">
-              <span className="absolute inset-y-0 left-0 text-xl flex items-center pl-2">
-                <button
-                  type="button"
-                  title="search"
-                  className="px-1 focus:outline-none focus:ring"
-                >
-                  <IoIosSearch className="text-black text-xl "></IoIosSearch>
-                </button>
-              </span>
-              <input
-                type="search"
-                {...register("assetName", { required: true })}
-                placeholder="Search..."
-                className="w-full h-[46px] border border-purple-400 py-2 pl-10 text-sm rounded-md focus:outline-none bg-base-200 text-blue-950 "
-              />
-            </div>
-          </form>
-        </fieldset>
-
-        {/* pagination section */}
-        <div className="join w-full ">
-          <div className="join grid grid-cols-2">
-            <button
-              onClick={handlePreviousPage}
-              className="join-item btn btn-outline text-[14px] "
-            >
-              Previous page
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="join-item btn btn-outline"
-            >
-              Next
-            </button>
+      {Loading ? (
+        <>
+          <div>
+            <span className="loading loading-dots loading-xs"></span>
+            <span className="loading loading-dots loading-sm"></span>
+            <span className="loading loading-dots loading-md"></span>
+            <span className="loading loading-dots loading-lg"></span>
           </div>
-          {/* {pages?.map((page, index) => {
+        </>
+      ) : (
+        <>
+          <div className=" w-full px-8 py-5 border border-base-200  flex items-center gap-4 justify-evenly">
+            {/* search section */}
+            <fieldset className="w-full space-y-1 text-gray-100">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="Search" className="hidden">
+                  Search
+                </label>
+                <div className="relative w-full ">
+                  <span className="absolute inset-y-0 left-0 text-xl flex items-center pl-2">
+                    <button
+                      type="button"
+                      title="search"
+                      className="px-1 focus:outline-none focus:ring"
+                    >
+                      <IoIosSearch className="text-black text-xl "></IoIosSearch>
+                    </button>
+                  </span>
+                  <input
+                    type="search"
+                    {...register("assetName", { required: true })}
+                    placeholder="Search..."
+                    className="w-full h-[46px] border border-purple-400 py-2 pl-10 text-sm rounded-md focus:outline-none bg-base-200 text-blue-950 "
+                  />
+                </div>
+              </form>
+            </fieldset>
+
+            {/* pagination section */}
+            <div className="join w-full ">
+              <div className="join grid grid-cols-2">
+                <button
+                  onClick={handlePreviousPage}
+                  className="join-item btn btn-outline text-[14px] "
+                >
+                  Previous page
+                </button>
+                <button
+                  onClick={handleNextPage}
+                  className="join-item btn btn-outline"
+                >
+                  Next
+                </button>
+              </div>
+              {/* {pages?.map((page, index) => {
             return (
               <button key={index} className="btn bg-blue-950 hover:bg-blue-950 hover:bg-opacity-75 text-white text-xl ">1</button>
             );
           })} */}
-        </div>
+            </div>
 
-        {/* assets filter section */}
-        <select onChange={handleSortingData} className="select select-primary w-full max-w-xs">
-          <option disabled selected>
-           Filter assets by...
-          </option>
-          <option>Available</option>
-          <option>Not-available</option>
-          <option>Returnable</option>
-          <option>Non-returnable</option>
-        </select>
-      </div>
+            {/* assets filter section */}
+            <select
+              onChange={handleSortingData}
+              className="select select-primary w-full max-w-xs"
+            >
+              <option disabled selected>
+                Filter assets by...
+              </option>
+              <option>Available</option>
+              <option>Not-available</option>
+              <option>Returnable</option>
+              <option>Non-returnable</option>
+            </select>
+          </div>
 
-      {/* assets list section */}
-      <section className="grid mt-5 w-[95%] mx-auto font-Poppins grid-cols-2 lg:grid-cols-4 ">
-        {assetsData?.map((item) => (
-          <AssetsDisplayCompo
-            key={item._id}
-            assetsData={item}
-          ></AssetsDisplayCompo>
-        ))}
-      </section>
+          {/* assets list section */}
+          <section className="grid mt-5 w-[95%] mx-auto font-Poppins grid-cols-2 lg:grid-cols-4 ">
+            {assetsData?.map((item) => (
+              <AssetsDisplayCompo
+                key={item._id}
+                assetsData={item}
+              ></AssetsDisplayCompo>
+            ))}
+          </section>
+        </>
+      )}
+
+      {/* assets search and filter sections 
+        TODO: Search and filter items functinality should apply on the server side
+        */}
     </div>
   );
 };

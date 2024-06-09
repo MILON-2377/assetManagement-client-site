@@ -17,7 +17,7 @@ export const authContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(true);
   const publicApi = usePublicApi();
 
   const userRegister = (email, password) => {
@@ -40,6 +40,7 @@ const AuthProvider = ({ children }) => {
     const unSubScribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setLoading(false);
         const userEmail = currentUser.email;
 
         // token
@@ -55,7 +56,6 @@ const AuthProvider = ({ children }) => {
             console.log(error);
           });
 
-        setLoading(false);
         isUserLoggedIN(currentUser);
       } else {
         setUser(null);
@@ -69,6 +69,7 @@ const AuthProvider = ({ children }) => {
   // user logOut
   const logOut = () => {
     // isManagerHandle("LogOut");
+    setLoading(true);
     isLoading(true);
     return signOut(auth);
   };
@@ -86,8 +87,9 @@ const AuthProvider = ({ children }) => {
     googleLogIn,
     user,
     logOut,
-    loading,
-    handleUpdateProfile
+    Loading,
+    handleUpdateProfile,
+    setLoading
   };
 
   return (

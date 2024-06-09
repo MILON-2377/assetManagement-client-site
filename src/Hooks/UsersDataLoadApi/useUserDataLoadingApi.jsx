@@ -7,18 +7,12 @@ const useUserDataLoadingApi = (name) => {
   const axiousSecureApi = useAxiosSecure();
   const { user } = useAuthProvider();
 
-  const userArrr = [];
-  if (user) {
-    userArrr.length = 0;
-    userArrr.push(user.email);
-  }
-
 
   const fetchData = async () => {
     const affiliated = affiliatedUsers();
     const res = await axiousSecureApi.get("/users", {
       params: {
-        userEmail: userArrr[0],
+        userEmail: user?.email,
         affiliated,
         userPending:name
       },
@@ -26,12 +20,12 @@ const useUserDataLoadingApi = (name) => {
     return res.data;
   };
 
-  const { data: userData = [], refetch } = useQuery({
+  const { data: userData = [], refetch, isLoading } = useQuery({
     queryKey: ["userData"],
     queryFn: () => fetchData(),
   });
 
-  return [userData, refetch];
+  return [userData, refetch, isLoading];
 };
 
 export default useUserDataLoadingApi;

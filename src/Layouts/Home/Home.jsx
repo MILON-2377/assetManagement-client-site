@@ -10,6 +10,7 @@ import MyMonthlyRequest from "../JoinAsAnEmployee/MyMonthlyRequest/MyMonthlyRequ
 import TrackYourProgres from "../JoinAsAnEmployee/TrackYourProgress/TrackYourProgres";
 import { Helmet } from "react-helmet-async";
 import swal from "sweetalert";
+// import ImportantNoticed from "../JoinAsAnEmployee/ImportanatNoticed/ImportantNoticed";
 
 const Home = () => {
   const { user } = useAuthProvider();
@@ -68,6 +69,7 @@ const Home = () => {
                   <>
                     <MyPendingRequest></MyPendingRequest>
                     <MyMonthlyRequest></MyMonthlyRequest>
+                    {/* <ImportantNoticed></ImportantNoticed> */}
                     <TrackYourProgres></TrackYourProgres>
                   </>
                 ) : (

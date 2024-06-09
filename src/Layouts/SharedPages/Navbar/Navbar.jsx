@@ -6,7 +6,6 @@ import HRmanagerNavlinks from "./HRmanager/components/HRmanagerNavlinks";
 import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
 import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 import { useEffect } from "react";
-import isLoading from "../../../Hooks/Loading/loading";
 
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
@@ -14,20 +13,9 @@ const Navbar = () => {
 
   const userPower = userData?.userType;
 
-  // console.log(userPower);
-  const loading = isLoading();
-
   useEffect(() => {
-    isLoading(true);
-    if (userPower) {
-      isLoading(false);
-    }
     refetch();
   }, [user]);
-
-  if (userPower) {
-    isLoading(false);
-  }
 
   const handleUsrLogOut = () => {
     logOut()
@@ -64,42 +52,7 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-4 shadow bg-base-100 gap-2 rounded-box w-52"
           >
-            {loading ? (
-              <>
-                <>
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
-                        : " px-3 py-2  rounded-md text-black "
-                    }
-                  >
-                    <li>Home</li>
-                  </NavLink>
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
-                        : " px-3 py-2  rounded-md text-black "
-                    }
-                    to="/joinAnEmployee"
-                  >
-                    <li>Join as Employee</li>
-                  </NavLink>
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
-                        : " px-3 py-2  rounded-md text-black "
-                    }
-                    to="/joinAnHRManager"
-                  >
-                    <li>Join as HR Manager</li>
-                  </NavLink>
-                </>
-              </>
-            ) : user ? (
+            {user ? (
               <>
                 {userPower === "Manager" ? (
                   <>
