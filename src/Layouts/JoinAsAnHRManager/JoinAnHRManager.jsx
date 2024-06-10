@@ -3,11 +3,13 @@ import Swal from "sweetalert2";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import handleUserRegisterData from "../../Hooks/UsersRegister/userRegisterData";
 import useUserRegister from "../../Hooks/UsersRegister/useUserRegister";
+import { useNavigate } from "react-router-dom";
 
 const JoinAnHRManager = () => {
   const { register, handleSubmit, reset } = useForm();
   const { userRegister } = useAuthProvider();
   const registerUser = useUserRegister();
+  const navigate = useNavigate();
 
   //   console.log(user);
 
@@ -32,11 +34,7 @@ const JoinAnHRManager = () => {
           .then((res) => {
             // console.log(res);
             if (res.acknowledged) {
-              Swal.fire({
-                title: `Hello ${fullName}!`,
-                text: "Welcome to our asset managemanet webiste!",
-                icon: "success",
-              });
+              navigate("/packagesCard");
               reset();
             } else {
               Swal.fire({

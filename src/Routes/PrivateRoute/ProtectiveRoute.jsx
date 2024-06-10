@@ -3,6 +3,7 @@ import useUserDataLoadingApi from "../../Hooks/UsersDataLoadApi/useUserDataLoadi
 import useRefreshHandling from "../../Hooks/RefreshHandling/useRefreshHandling";
 import { useEffect, useState } from "react";
 import LoadingPage from "../../LoadingPage/LoadingPage";
+// import Swal from "sweetalert2";
 
 const fakeAuthCheck = () => {
   return new Promise((resolve) => {
@@ -18,6 +19,9 @@ const ProtectiveRoute = ({ children }) => {
   const [userData, refetch, isLoading] = useUserDataLoadingApi();
   const userPower = userData?.userType;
   const isRefresh = useRefreshHandling();
+  // const location = useLocation();
+
+  // console.log(userData);
 
   useEffect(() => {
     refetch();
@@ -56,3 +60,19 @@ const ProtectiveRoute = ({ children }) => {
 };
 
 export default ProtectiveRoute;
+
+
+// if (
+    //   (userPower === "Manager" && userData?.userdata?.packagesLimit === 0) ||
+    //   location.pathname !== "/payment"
+    // ) {
+    //   console.log(userData?.userdata);
+
+    //   Swal.fire({
+    //     title: "Payment Warning!!",
+    //     text: "You must have to pay before access website page..",
+    //     icon: "warning",
+    //   });
+
+    //   return <Navigate to="/packagesCard"></Navigate>;
+    // }

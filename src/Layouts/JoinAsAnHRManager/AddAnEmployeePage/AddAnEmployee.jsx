@@ -15,7 +15,7 @@ const AddAnEmployee = () => {
   const { employees,userdata } = userData;
 
   // console.log(userdata);
-  // console.log(location);
+  console.log(employees);
 
 
   useEffect(() => {

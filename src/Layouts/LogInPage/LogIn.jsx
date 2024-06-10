@@ -1,18 +1,12 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import useUserDataLoadingApi from "../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 
 const LogIn = () => {
   const { userLogIn, googleLogIn } = useAuthProvider();
   const { register, handleSubmit, reset } = useForm();
-  const [userData] = useUserDataLoadingApi();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location?.state?.from;
-
-  const userPower = userData?.userType;
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -25,7 +19,7 @@ const LogIn = () => {
           text: "Welcome to our site!",
           icon: "success",
         });
-
+        navigate("/");
         reset();
       })
       .catch((error) => {

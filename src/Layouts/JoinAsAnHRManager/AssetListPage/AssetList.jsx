@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { IoIosSearch } from "react-icons/io";
 import useAssetsSearchApi from "../../../Hooks/AssetsSearchApi/useAssetsSearchApi";
 import searhTextUpdate from "../../../Hooks/AssetsSearchApi/searchTextUpdataState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import handlePaginationPage from "../../../Hooks/PaginationCount/paginationPage";
 import handleSortingArr from "../../../Hooks/AssetsDataSorting/assetsSorting";
 import sortingAssetsDataStore from "../../../Hooks/HandleSortingAssetsData/sortingAssetsData";
 import useAxiosSecure from "../../../Hooks/AxiousSecureApi/useAxiosSecure";
 import Swal from "sweetalert2";
+// import useHRManagerRouteProtected from "../../../Hooks/HrManagerRouteProceted/useHRManagerRouteProtected";
 
 const AssetList = () => {
   const [resultData, refetch] = useAssetsSearchApi();
@@ -17,12 +18,18 @@ const AssetList = () => {
   const [pages, setPages] = useState(0);
   const axiousSecures = useAxiosSecure();
 
+  // const paymentPro = useHRManagerRouteProtected();
+
+  useEffect(() => {
+    // return paymentPro
+  },[])
+
   const onSubmit = (data) => {
     const { assetName } = data;
     searhTextUpdate(assetName);
-    // sortingAssetsDataStore(1);
-    // handleSortingArr(1);
-    // handlePaginationPage(1);
+    sortingAssetsDataStore(1);
+    handleSortingArr(1);
+    handlePaginationPage(1);
     refetch();
     reset();
   };

@@ -10,7 +10,7 @@ const JoinAnEmployee = () => {
   const registerUser = useUserRegister();
 
   const userType = "Employee";
-  const Affiliated = "not affiliated";
+  const isAffiliated = "not affiliated";
   const companyName = "";
   const companyLogoImage = "";
 
@@ -22,9 +22,8 @@ const JoinAnEmployee = () => {
       fullName,
       email,
       dateOfBirth,
-      Manager,
-      Affiliated,
-      memberType,
+      userType,
+      isAffiliated,
       companyName,
       companyLogoImage,
     };
@@ -70,7 +69,7 @@ const JoinAnEmployee = () => {
           fullName,
           email,
           userType,
-          Affiliated,
+          isAffiliated,
           companyName,
           companyLogoImage,
         };

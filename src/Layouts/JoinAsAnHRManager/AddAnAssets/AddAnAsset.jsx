@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../Hooks/AxiousSecureApi/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddAnAsset = () => {
   // TODO: this route page will have to make it for HR manager conditionally
@@ -8,15 +9,20 @@ const AddAnAsset = () => {
 
   const addAnAsserApi = useAxiosSecure();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
 
     addAnAsserApi
       .post("/addAssets", data)
       .then((res) => {
-        console.log(res);
+        Swal.fire({
+          title: "Asset Added",
+          text: "Your asset data store to the database successfully!!",
+          icon: "success"
+        });
+        reset();
       })
       .catch((error) => {
         console.log(error);

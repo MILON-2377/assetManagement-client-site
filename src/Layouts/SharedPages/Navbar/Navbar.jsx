@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuthProvider from "../../../Hooks/AuthProviderHooks/useAuthProvider";
 import Employee from "./NormalEmployee/Employee";
 import HRManager from "./HRmanager/HRManager";
@@ -10,8 +10,11 @@ import { useEffect } from "react";
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
   const [userData, refetch] = useUserDataLoadingApi();
+  const navigate = useNavigate();
 
   const userPower = userData?.userType;
+
+  console.log(userData.userdata);
 
   useEffect(() => {
     refetch();
@@ -19,8 +22,8 @@ const Navbar = () => {
 
   const handleUsrLogOut = () => {
     logOut()
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error);
@@ -147,71 +150,123 @@ const Navbar = () => {
             <>
               {userPower === "Manager" ? (
                 <>
-                  <HRmanagerNavlinks></HRmanagerNavlinks>
-                  <div className="dropdown dropdown-end">
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      className="btn btn-ghost btn-circle avatar"
-                    >
-                      <div className="w-10 rounded-full">
-                        <img
-                          alt="Tailwind CSS Navbar component"
-                          src={user?.photoURL}
-                        />
+                  <div className="flex items-center">
+                    <HRmanagerNavlinks></HRmanagerNavlinks>
+                    <div className="drawer w-[65px] drawer-end">
+                      <input
+                        id="my-drawer-4"
+                        type="checkbox"
+                        className="drawer-toggle"
+                      />
+                      <div className="drawer-content">
+                        {/* Page content here */}
+                        <label
+                          htmlFor="my-drawer-4"
+                          className=" float-right h-[60px] w-[60px] rounded-full border-2 "
+                        >
+                          <img
+                            src={user?.photoURL}
+                            className="w-full rounded-full h-full object-cover "
+                          />
+                        </label>
+                      </div>
+                      <div className="drawer-side">
+                        <label
+                          htmlFor="my-drawer-4"
+                          aria-label="close sidebar"
+                          className="drawer-overlay"
+                        ></label>
+                        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                          <h2 className="text-2xl font-bold text-center ">{userData?.userdata?.companyName}</h2>
+                          <li>
+                            <a>
+                              {" "}
+                              <span className="font-bold text-[18px] ">
+                                Name:
+                              </span>
+                              <span className="text-blue-700 uppercase font-semibold">
+                                {user?.displayName}
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <Link to="/employeProfile" className="font-bold">
+                              Profile
+                            </Link>
+                          </li>
+                          <li>
+                            <button
+                              onClick={handleUsrLogOut}
+                              className="font-bold"
+                            >
+                              LogOut
+                            </button>
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                    <ul
-                      tabIndex={0}
-                      className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                    >
-                      {/* /employeProfile */}
-                      <li>
-                        <Link to="/employeProfile">Profile</Link>
-                      </li>
-                      <li>
-                        <a>Settings</a>
-                      </li>
-                      <li onClick={handleUsrLogOut}>
-                        <a>Logout</a>
-                      </li>
-                    </ul>
                   </div>
                 </>
               ) : (
                 userPower === "Employee" && (
                   <>
-                    <EmployeeNavlinks></EmployeeNavlinks>
-                    <div className="dropdown dropdown-end">
-                      <div
-                        tabIndex={0}
-                        role="button"
-                        className="btn btn-ghost btn-circle avatar"
-                      >
-                        <div className="w-10 rounded-full">
-                          <img
-                            alt="Tailwind CSS Navbar component"
-                            src={user?.photoURL}
-                          />
+                    <div className="flex items-center justify-between ">
+                      <div className=" w-[250px] gap-5 flex items-center ">
+                        <EmployeeNavlinks></EmployeeNavlinks>
+                      </div>
+                      <div className="drawer w-[80px] drawer-end">
+                        <input
+                          id="my-drawer-4"
+                          type="checkbox"
+                          className="drawer-toggle"
+                        />
+                        <div className="drawer-content">
+                          {/* Page content here */}
+                          <label
+                            htmlFor="my-drawer-4"
+                            className=" float-right h-[60px] w-[60px] rounded-full border-2 "
+                          >
+                            <img
+                              src={user?.photoURL}
+                              className="w-full rounded-full h-full object-cover "
+                            />
+                          </label>
+                        </div>
+                        <div className="drawer-side">
+                          <label
+                            htmlFor="my-drawer-4"
+                            aria-label="close sidebar"
+                            className="drawer-overlay"
+                          ></label>
+                          <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                            {/* Sidebar content here */}
+                            <li>
+                              <a>
+                                {" "}
+                                <span className="font-bold text-[18px] ">
+                                  Name:
+                                </span>
+                                <span className="text-blue-700 uppercase font-semibold">
+                                  {user?.displayName}
+                                </span>
+                              </a>
+                            </li>
+                            <li>
+                              <Link to="/employeProfile" className="font-bold">
+                                Profile
+                              </Link>
+                            </li>
+                            <li>
+                              <button
+                                onClick={handleUsrLogOut}
+                                className="font-bold"
+                              >
+                                LogOut
+                              </button>
+                            </li>
+                          </ul>
                         </div>
                       </div>
-                      <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                      >
-                        <li>
-                          <a className="justify-between">
-                            Profile
-                            <span className="badge">New</span>
-                          </a>
-                        </li>
-                        <NavLink to="/myRequestedAssets">
-                          <li>My requested assets</li>
-                        </NavLink>
-                        <li onClick={handleUsrLogOut}>
-                          <a>Logout</a>
-                        </li>
-                      </ul>
                     </div>
                   </>
                 )
@@ -237,33 +292,41 @@ const Navbar = () => {
       <div className=" lg:hidden navbar-end ">
         {user ? (
           <>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
+            {/* drawer open from left side */}
+            <div className="drawer drawer-end">
+              <input
+                id="my-drawer-4"
+                type="checkbox"
+                className="drawer-toggle"
+              />
+              <div className="drawer-content">
+                {/* Page content here */}
+                <label
+                  htmlFor="my-drawer-4"
+                  className=" float-right h-[60px] w-[60px] rounded-full border-2 "
+                >
                   <img
-                    alt="Tailwind CSS Navbar component"
                     src={user?.photoURL}
+                    className="w-full rounded-full h-full object-cover "
                   />
-                </div>
+                </label>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link to="/employeProfile">Profile</Link>
-                </li>
-                <li>
-                  <a>Settings</a>
-                </li>
-                <li onClick={handleUsrLogOut}>
-                  <a>Logout</a>
-                </li>
-              </ul>
+              <div className="drawer-side">
+                <label
+                  htmlFor="my-drawer-4"
+                  aria-label="close sidebar"
+                  className="drawer-overlay"
+                ></label>
+                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                  {/* Sidebar content here */}
+                  <li>
+                    <a>Sidebar Item 1</a>
+                  </li>
+                  <li>
+                    <a>Sidebar Item 2</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </>
         ) : (

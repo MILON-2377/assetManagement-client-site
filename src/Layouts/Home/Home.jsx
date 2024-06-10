@@ -10,24 +10,39 @@ import MyMonthlyRequest from "../JoinAsAnEmployee/MyMonthlyRequest/MyMonthlyRequ
 import TrackYourProgres from "../JoinAsAnEmployee/TrackYourProgress/TrackYourProgres";
 import { Helmet } from "react-helmet-async";
 import swal from "sweetalert";
+import LoadingPage from "../../LoadingPage/LoadingPage";
+// import useHRManagerRouteProtected from "../../Hooks/HrManagerRouteProceted/useHRManagerRouteProtected";
+
 // import ImportantNoticed from "../JoinAsAnEmployee/ImportanatNoticed/ImportantNoticed";
+
+const fakeAuthCheck = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2200);
+  });
+};
 
 const Home = () => {
   const { user } = useAuthProvider();
-  const [userData, refetch] = useUserDataLoadingApi();
-  const [loading, setLoaiding] = useState(true);
+  const [userData, refetch, isLoading] = useUserDataLoadingApi();
+  const [isDataLoaing, setIsDataLoading] = useState(true);
 
   const userPower = userData?.userType;
 
-  // console.log(userPower);
+  //  const paymentPro = useHRManagerRouteProtected();
 
   useEffect(() => {
+    const dataLoading = async () => {
+      const auth = await fakeAuthCheck();
+      if (isLoading) {
+        setIsDataLoading(false);
+      }
+    };
+    dataLoading();
     refetch();
-    if (userData) {
-      setLoaiding(false);
-    }
     sortingAssetsDataStore("ltn10");
-  }, [user]);
+  }, [user, isLoading]);
 
   useEffect(() => {
     if (userData?.userdata?.Affiliated === "not affiliated") {
@@ -37,6 +52,9 @@ const Home = () => {
     }
   }, [userData]);
 
+  if (isDataLoaing) {
+    return <LoadingPage></LoadingPage>;
+  }
   return (
     <div>
       <Helmet>
@@ -47,16 +65,7 @@ const Home = () => {
       <Banner></Banner>
 
       <section>
-        {loading ? (
-          <>
-            <div>
-              <span className="loading loading-dots loading-xs"></span>
-              <span className="loading loading-dots loading-sm"></span>
-              <span className="loading loading-dots loading-md"></span>
-              <span className="loading loading-dots loading-lg"></span>
-            </div>
-          </>
-        ) : (
+        {
           <>
             {userPower === "Manager" ? (
               <>
@@ -454,7 +463,7 @@ const Home = () => {
               </>
             )}
           </>
-        )}
+        }
       </section>
     </div>
   );
