@@ -17,15 +17,15 @@ const Banner = () => {
             className="w-full"
           /> */}
           <div className="card-body flex items-center justify-center text-blue-600 ">
-            <h2 className="card-title text-2xl font-Poppins font-semibold ">
-              Join Our Team
+            <h2 className="card-title text-2xl text-center mx-auto font-Poppins font-semibold ">
+              Effortlessly Manage Your Company Assets with AssetTrackr
             </h2>
-            <p className="text-xl font-normal ">
-              Join Our Team Choose your path: Join as an HR Manager or as an
-              Employee by clicking the buttons below.
-            </p>
+
             <div className="card-actions">
-              <NavLink to='/joinAnHRManager' className="btn bg-black text-white hover:bg-black hover:bg-opacity-70 ">
+              <NavLink
+                to="/joinAnHRManager"
+                className="btn bg-black text-white hover:bg-black hover:bg-opacity-70 "
+              >
                 Join as HR Manager
               </NavLink>
             </div>
@@ -44,27 +44,22 @@ const Banner = () => {
             className="w-full"
           /> */}
           <div className="card-body flex items-center justify-center text-blue-600 ">
-            <h2 className="card-title text-2xl font-Poppins font-semibold ">Join as an Employee</h2>
-            <p className="text-xl">Be a part of our dynamic team and grow with us. Discover new opportunities and make an impact.</p>
+            <h2 className="card-title text-2xl font-Poppins font-semibold ">
+              Join as an Employee
+            </h2>
+            <p className="text-xl">
+              Be a part of our dynamic team and grow with us. Discover new
+              opportunities and make an impact.
+            </p>
             <div className="card-actions">
-              <NavLink to='/joinAnEmployee' className="btn bg-black text-white hover:bg-black hover:bg-opacity-70 ">
+              <NavLink
+                to="/joinAnEmployee"
+                className="btn bg-black text-white hover:bg-black hover:bg-opacity-70 "
+              >
                 Join as Employee
-              </NavLink >
+              </NavLink>
             </div>
           </div>
-        </div>
-       
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="flex-1 bg-slate-100 h-10 "></div>
-        <div className="flex justify-center bg-yellow-200 lg:w-[30%] py-2 gap-2">
-          <a href="#item1" className="btn btn-xs bg-pink-500 text-white ">
-            1
-          </a>
-          <a href="#item2" className="btn bg-pink-500 text-white btn-xs">
-            2
-          </a>
-          
         </div>
       </div>
     </div>

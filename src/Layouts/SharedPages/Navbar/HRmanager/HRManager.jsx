@@ -7,8 +7,8 @@ const HRManager = () => {
         to="/"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>Home</li>
@@ -17,8 +17,8 @@ const HRManager = () => {
         to="/assetList"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>Asset List</li>
@@ -27,8 +27,8 @@ const HRManager = () => {
         to="/addAnAsset"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>Add an Asset</li>

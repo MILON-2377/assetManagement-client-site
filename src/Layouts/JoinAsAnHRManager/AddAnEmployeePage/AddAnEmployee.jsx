@@ -74,7 +74,7 @@ const AddAnEmployee = () => {
               <h2 className="text-xl font-Poppins font-bold">
                 Current Empoyees :
               </h2>
-              <p className=" ml-2 text-yellow-500 text-xl ">{userdata?.currentEmployees}</p>
+              <p className=" ml-2 text-yellow-500 text-xl ">{userdata?.currentEmployees ? userdata?.currentEmployees : 0}</p>
             </div>
             <div className="flex items-center">
               <h2 className="text-xl font-Poppins font-bold">

@@ -3,11 +3,13 @@ import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import handleUserRegisterData from "../../Hooks/UsersRegister/userRegisterData";
 import useUserRegister from "../../Hooks/UsersRegister/useUserRegister";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const JoinAnEmployee = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { userRegister, googleLogIn } = useAuthProvider();
   const registerUser = useUserRegister();
+  const navigate = useNavigate();
 
   const userType = "Employee";
   const isAffiliated = "not affiliated";
@@ -34,7 +36,9 @@ const JoinAnEmployee = () => {
         handleUserRegisterData(usersData);
         registerUser()
           .then((res) => {
-            console.log(res);
+            // console.log(res);
+            reset();
+            navigate("/");
             if (res.acknowledged) {
               Swal.fire({
                 title: `Hello ${fullName}!`,
@@ -82,6 +86,7 @@ const JoinAnEmployee = () => {
           .then((res) => {
             // console.log(res);
             if (res.acknowledged) {
+              navigate("/");
               Swal.fire({
                 title: `Hello ${fullName}!`,
                 text: "Welcome to our asset managemanet webiste!",

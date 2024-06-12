@@ -7,18 +7,18 @@ const HRmanagerNavlinks = () => {
         to="/allRequesForAsset"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>All Requests</li>
       </NavLink>
       <NavLink
-      to='/customRequest'
+        to="/customrequest"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>Custom Requests List</li>
@@ -27,8 +27,8 @@ const HRmanagerNavlinks = () => {
         to="/myEmpoyeeList"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>My Employee List</li>
@@ -37,8 +37,8 @@ const HRmanagerNavlinks = () => {
         to="/addAnEmployee"
         className={({ isActive }) =>
           isActive
-            ? " px-3 py-2 text-black font-Poppins bg-base-200 rounded-md "
-            : " px-3 py-2 text-black "
+            ? "text-blue-500 font-bold"
+            : "text-white hover:text-gray-300"
         }
       >
         <li>Add an Employee</li>

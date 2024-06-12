@@ -5,16 +5,19 @@ import HRManager from "./HRmanager/HRManager";
 import HRmanagerNavlinks from "./HRmanager/components/HRmanagerNavlinks";
 import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
 import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import NavCompoMid from "./NavCompoForMediumDe/NavCompoMid";
+import { MdMenuOpen } from "react-icons/md";
 
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
   const [userData, refetch] = useUserDataLoadingApi();
   const navigate = useNavigate();
 
-  const userPower = userData?.userType;
+  // toggle navbar menu icons
+  const [isMenuActive, setIsMenuActive] = useState(false);
 
-  console.log(userData.userdata);
+  const userPower = userData?.userType;
 
   useEffect(() => {
     refetch();
@@ -30,83 +33,48 @@ const Navbar = () => {
       });
   };
 
+  const handleMenuToggle = (t) => {
+    setIsMenuActive(() => t);
+  };
+
+  useEffect(() => {
+    console.log(isMenuActive);
+  }, [isMenuActive]);
+
   return (
-    <div className="navbar font-Poppins flex items-center justify-evenly bg-base-100">
+    <div className="navbar font-Poppins flex items-center text-white justify-evenly bg-[#2C3E50] ">
       <div className="navbar-start lg:hidden ">
-        <div className="dropdown ">
-          {/* this is for medium devices */}
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <>
+          <div className="drawer">
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div
+              onClick={() => handleMenuToggle(true)}
+              className=" hover:bg-slate-700 px-3 flex items-center justify-items-center py-2 hover:rounded-md  "
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+              {/* Page content here */}
+              <label htmlFor="my-drawer">
+                <MdMenuOpen className="text-white hover:text-gray-300 cursor-pointer text-3xl"></MdMenuOpen>
+              </label>
+            </div>
+            <div className={isMenuActive ? "drawer-side z-20 " : "hidden"}>
+              <label
+                htmlFor="my-drawer"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <ul className="menu px-4 py-5 w-80 min-h-full flex flex-col gap-2 bg-gray-800 text-base-content">
+                <li
+                  onClick={() => handleMenuToggle(false)}
+                  className="text-white -mt-2 flex items-end justify-end "
+                >
+                  <span className="text-[35px] ">x</span>
+                </li>
+                <div className="divider divider-primary  text-white "></div>
+                <NavCompoMid></NavCompoMid>
+              </ul>
+            </div>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-4 shadow bg-base-100 gap-2 rounded-box w-52"
-          >
-            {user ? (
-              <>
-                {userPower === "Manager" ? (
-                  <>
-                    <HRManager></HRManager>
-                    <HRmanagerNavlinks></HRmanagerNavlinks>
-                  </>
-                ) : (
-                  userPower === "Employee" && (
-                    <>
-                      <Employee></Employee>
-                      <EmployeeNavlinks></EmployeeNavlinks>
-                    </>
-                  )
-                )}
-              </>
-            ) : (
-              <>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
-                      : " px-3 py-2  rounded-md text-black "
-                  }
-                >
-                  <li>Home</li>
-                </NavLink>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
-                      : " px-3 py-2  rounded-md text-black "
-                  }
-                  to="/joinAnEmployee"
-                >
-                  <li>Join as Employee</li>
-                </NavLink>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? "px-3 py-2 bg-base-200 rounded-md text-black font-Poppins "
-                      : " px-3 py-2  rounded-md text-black "
-                  }
-                  to="/joinAnHRManager"
-                >
-                  <li>Join as HR Manager</li>
-                </NavLink>
-              </>
-            )}
-          </ul>
-        </div>
+        </>
       </div>
 
       {/* this title section is for larges device */}
@@ -127,10 +95,24 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <NavLink>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 font-bold"
+                    : "text-white hover:text-gray-300"
+                }
+              >
                 <li>Home</li>
               </NavLink>
-              <NavLink to="/joinAnEmployee">
+              <NavLink
+                to="/joinAnEmployee"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 font-bold"
+                    : "text-white hover:text-gray-300"
+                }
+              >
                 <li>Join as Employee</li>
               </NavLink>
             </>
@@ -177,7 +159,9 @@ const Navbar = () => {
                           className="drawer-overlay"
                         ></label>
                         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-                          <h2 className="text-2xl font-bold text-center ">{userData?.userdata?.companyName}</h2>
+                          <h2 className="text-2xl font-bold text-center ">
+                            {userData?.userdata?.companyName}
+                          </h2>
                           <li>
                             <a>
                               {" "}
@@ -274,15 +258,22 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <NavLink to="/joinAnHRManager">
+              <NavLink
+                to="/joinAnHRManager"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 font-bold"
+                    : "text-white hover:text-gray-300"
+                }
+              >
                 <li>Join as HR Manager</li>
               </NavLink>
-              <Link
+              <NavLink
                 to="/login"
-                className="btn font-Poppins bg-black text-white "
+                className="btn bg-[#007BFF] hover:bg-[#0056b3] active:bg-[#004085] text-[16px] text-white "
               >
                 LogIn
-              </Link>
+              </NavLink>
             </>
           )}
         </ul>
@@ -320,10 +311,23 @@ const Navbar = () => {
                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                   {/* Sidebar content here */}
                   <li>
-                    <a>Sidebar Item 1</a>
+                    <a>
+                      {" "}
+                      <span className="font-bold text-[18px] ">Name:</span>
+                      <span className="text-blue-700 uppercase font-semibold">
+                        {user?.displayName}
+                      </span>
+                    </a>
                   </li>
                   <li>
-                    <a>Sidebar Item 2</a>
+                    <Link to="/employeProfile" className="font-bold">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <button onClick={handleUsrLogOut} className="font-bold">
+                      LogOut
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -333,7 +337,7 @@ const Navbar = () => {
           <>
             <NavLink
               to="/login"
-              className="btn bg-black hover:bg-black hover:bg-opacity-70 text-white "
+              className="btn bg-[#007BFF] hover:bg-[#0056b3] active:bg-[#004085] text-[16px] text-white "
             >
               LogIn
             </NavLink>
