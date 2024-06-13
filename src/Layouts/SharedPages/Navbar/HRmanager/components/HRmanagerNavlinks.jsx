@@ -7,8 +7,8 @@ const HRmanagerNavlinks = () => {
         to="/allRequesForAsset"
         className={({ isActive }) =>
           isActive
-            ? "text-blue-500 font-bold"
-            : "text-white hover:text-gray-300"
+            ? "text-blue-500 font-bold px-3 py-1 rounded-md bg-gray-50  "
+            : "text-white hover:bg-gray-700 px-3 py-1 rounded-md hover:text-gray-300 "
         }
       >
         <li>All Requests</li>
@@ -17,8 +17,8 @@ const HRmanagerNavlinks = () => {
         to="/customrequest"
         className={({ isActive }) =>
           isActive
-            ? "text-blue-500 font-bold"
-            : "text-white hover:text-gray-300"
+            ? "text-blue-500 font-bold px-3 py-1 rounded-md bg-gray-50  "
+            : "text-white hover:bg-gray-700 px-3 py-1 rounded-md hover:text-gray-300 "
         }
       >
         <li>Custom Requests List</li>
@@ -27,8 +27,8 @@ const HRmanagerNavlinks = () => {
         to="/myEmpoyeeList"
         className={({ isActive }) =>
           isActive
-            ? "text-blue-500 font-bold"
-            : "text-white hover:text-gray-300"
+            ? "text-blue-500 font-bold px-3 py-1 rounded-md bg-gray-50  "
+            : "text-white hover:bg-gray-700 px-3 py-1 rounded-md hover:text-gray-300 "
         }
       >
         <li>My Employee List</li>
@@ -37,8 +37,8 @@ const HRmanagerNavlinks = () => {
         to="/addAnEmployee"
         className={({ isActive }) =>
           isActive
-            ? "text-blue-500 font-bold"
-            : "text-white hover:text-gray-300"
+            ? "text-blue-500 font-bold px-3 py-1 rounded-md bg-gray-50  "
+            : "text-white hover:bg-gray-700 px-3 py-1 rounded-md hover:text-gray-300 "
         }
       >
         <li>Add an Employee</li>

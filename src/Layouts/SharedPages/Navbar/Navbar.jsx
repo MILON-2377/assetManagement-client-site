@@ -4,24 +4,27 @@ import Employee from "./NormalEmployee/Employee";
 import HRManager from "./HRmanager/HRManager";
 import HRmanagerNavlinks from "./HRmanager/components/HRmanagerNavlinks";
 import EmployeeNavlinks from "./NormalEmployee/components/EmployeeNavlinks";
-import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 import { useEffect, useState } from "react";
 import NavCompoMid from "./NavCompoForMediumDe/NavCompoMid";
 import { MdMenuOpen } from "react-icons/md";
+import useUserDataLoadingApi from "../../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
+import ErrorPage from "../../ErrorPage/ErrorPage";
+import NavbarLoading from "../../../LoadingPage/NavbarLoading/NavbarLoading";
 
 const Navbar = () => {
   const { logOut, user } = useAuthProvider();
-  const [userData, refetch] = useUserDataLoadingApi();
   const navigate = useNavigate();
-
-  // toggle navbar menu icons
   const [isMenuActive, setIsMenuActive] = useState(false);
+  const [userPower, setUserPower] = useState(null);
 
-  const userPower = userData?.userType;
+  const { data, error, isLoading } = useUserDataLoadingApi(user?.email);
 
   useEffect(() => {
-    refetch();
-  }, [user]);
+    if (data) {
+      setUserPower(data?.userType);
+    }
+    console.log(data?.userType);
+  }, [data]);
 
   const handleUsrLogOut = () => {
     logOut()
@@ -37,9 +40,13 @@ const Navbar = () => {
     setIsMenuActive(() => t);
   };
 
-  useEffect(() => {
-    console.log(isMenuActive);
-  }, [isMenuActive]);
+  if (isLoading) {
+    return <NavbarLoading></NavbarLoading>
+  }
+
+  if (error) {
+    return <ErrorPage></ErrorPage>;
+  }
 
   return (
     <div className="navbar font-Poppins flex items-center text-white justify-evenly bg-[#2C3E50] ">
@@ -62,16 +69,32 @@ const Navbar = () => {
                 aria-label="close sidebar"
                 className="drawer-overlay"
               ></label>
-              <ul className="menu px-4 py-5 w-80 min-h-full flex flex-col gap-2 bg-gray-800 text-base-content">
-                <li
-                  onClick={() => handleMenuToggle(false)}
-                  className="text-white -mt-2 flex items-end justify-end "
-                >
-                  <span className="text-[35px] ">x</span>
-                </li>
-                <div className="divider divider-primary  text-white "></div>
-                <NavCompoMid></NavCompoMid>
-              </ul>
+              {user ? (
+                <>
+                  {(userPower === "Manager" && (
+                    <>
+                      <ul className="menu px-4 py-5 w-80 min-h-full flex flex-col gap-2 bg-gray-800 text-base-content">
+                        <HRManager></HRManager>
+                        <HRmanagerNavlinks></HRmanagerNavlinks>
+                      </ul>
+                    </>
+                  )) ||
+                    (userPower === "Employee" && <> </>)}
+                </>
+              ) : (
+                <>
+                  <ul className="menu px-4 py-5 w-80 min-h-full flex flex-col gap-2 bg-gray-800 text-base-content">
+                    <li
+                      onClick={() => handleMenuToggle(false)}
+                      className="text-white -mt-2 flex items-end justify-end "
+                    >
+                      <span className="text-[35px] ">x</span>
+                    </li>
+                    <div className="divider divider-primary  text-white "></div>
+                    <NavCompoMid></NavCompoMid>
+                  </ul>
+                </>
+              )}
             </div>
           </div>
         </>
@@ -130,7 +153,7 @@ const Navbar = () => {
         <ul className="menu font-Poppins flex items-center justify-center gap-5 menu-horizontal px-1">
           {user ? (
             <>
-              {userPower === "Manager" ? (
+              {(userPower === "Manager" && (
                 <>
                   <div className="flex items-center">
                     <HRmanagerNavlinks></HRmanagerNavlinks>
@@ -160,7 +183,7 @@ const Navbar = () => {
                         ></label>
                         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                           <h2 className="text-2xl font-bold text-center ">
-                            {userData?.userdata?.companyName}
+                            {data?.userData?.userdata?.companyName}
                           </h2>
                           <li>
                             <a>
@@ -191,8 +214,8 @@ const Navbar = () => {
                     </div>
                   </div>
                 </>
-              ) : (
-                userPower === "Employee" && (
+              )) ||
+                (userPower === "Employee" && (
                   <>
                     <div className="flex items-center justify-between ">
                       <div className=" w-[250px] gap-5 flex items-center ">
@@ -253,8 +276,7 @@ const Navbar = () => {
                       </div>
                     </div>
                   </>
-                )
-              )}
+                ))}
             </>
           ) : (
             <>

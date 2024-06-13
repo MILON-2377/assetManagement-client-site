@@ -1,10 +1,9 @@
-import { useEffect} from "react";
+import { useEffect, useState } from "react";
 import useAuthProvider from "../../Hooks/AuthProviderHooks/useAuthProvider";
 import useUserDataLoadingApi from "../../Hooks/UsersDataLoadApi/useUserDataLoadingApi";
 import Banner from "./Banner/Banner";
 import AllPendingAssetRequest from "./Components/AllPendingAssetRequest";
 import TopMostRequestedAsset from "./Components/TopMostRequestedAsset";
-import sortingAssetsDataStore from "../../Hooks/HandleSortingAssetsData/sortingAssetsData";
 import MyPendingRequest from "../JoinAsAnEmployee/MyPendingRequest/MyPendingRequest";
 import MyMonthlyRequest from "../JoinAsAnEmployee/MyMonthlyRequest/MyMonthlyRequest";
 import TrackYourProgres from "../JoinAsAnEmployee/TrackYourProgress/TrackYourProgres";
@@ -12,31 +11,37 @@ import { Helmet } from "react-helmet-async";
 import swal from "sweetalert";
 import LoadingPage from "../../LoadingPage/LoadingPage";
 import HomePageCompo from "./homeWithOutUser/HomePageCompo";
-// import useHRManagerRouteProtected from "../../Hooks/HrManagerRouteProceted/useHRManagerRouteProtected";
-
-// import ImportantNoticed from "../JoinAsAnEmployee/ImportanatNoticed/ImportantNoticed";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import sortingAssetsDataStore from "../../Hooks/HandleSortingAssetsData/sortingAssetsData";
 
 const Home = () => {
   const { user } = useAuthProvider();
-  const [userData, refetch, isLoading] = useUserDataLoadingApi();
-  const userPower = userData?.userType;
+  const [userPower, setUserPower] = useState(null);
+  const { data, error, isLoading } = useUserDataLoadingApi(user?.email);
 
   useEffect(() => {
-    refetch();
+    if (data) {
+      setUserPower(data?.userType);
+    }
     sortingAssetsDataStore("ltn10");
-  }, []);
+  }, [data]);
 
   useEffect(() => {
-    if (userData?.userdata?.Affiliated === "not affiliated") {
+    if (data?.userData?.userdata?.Affiliated === "not affiliated") {
       swal(
         "Unaffiliated? Contact your HR manager for registration assistance. Let's kickstart your journey together!"
       );
     }
-  }, [userData]);
+  }, []);
 
-  if (user && isLoading) {
+  if (isLoading) {
     return <LoadingPage></LoadingPage>;
   }
+
+  if (error) {
+    return <ErrorPage></ErrorPage>;
+  }
+
   return (
     <div className="">
       <Helmet>
@@ -44,7 +49,7 @@ const Home = () => {
       </Helmet>
 
       <section>
-        {
+        {user && userPower ? (
           <>
             {userPower === "Manager" ? (
               <>
@@ -53,25 +58,22 @@ const Home = () => {
               </>
             ) : (
               <>
-                {userPower === "Employee" ? (
+                {userPower === "Employee" && (
                   <>
-                    <MyPendingRequest></MyPendingRequest>
+                    {/* <MyPendingRequest></MyPendingRequest>
                     <MyMonthlyRequest></MyMonthlyRequest>
-                    {/* <ImportantNoticed></ImportantNoticed> */}
-                    <TrackYourProgres></TrackYourProgres>
-                  </>
-                ) : (
-                  // if user and userPower not exist
-                  <>
-                    {/* banner section */}
-                    <Banner></Banner>
-                    <HomePageCompo></HomePageCompo>
+                    <TrackYourProgres></TrackYourProgres> */}
                   </>
                 )}
               </>
             )}
           </>
-        }
+        ) : (
+          <>
+            <Banner />
+            <HomePageCompo />
+          </>
+        )}
       </section>
     </div>
   );

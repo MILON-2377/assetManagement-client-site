@@ -9,7 +9,6 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../FirebaseAuth/Firebase.Config";
-import isUserLoggedIN from "../Hooks/UsersDataLoadApi/isUserLoggedIn";
 import usePublicApi from "../Hooks/PublicApi/usePublicApi";
 import isLoading from "../Hooks/Loading/loading";
 
@@ -56,7 +55,9 @@ const AuthProvider = ({ children }) => {
             console.log(error);
           });
 
-        isUserLoggedIN(currentUser);
+
+
+
       } else {
         setUser(null);
         localStorage.removeItem("userToken");

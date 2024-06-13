@@ -1,75 +1,87 @@
+import { useState } from "react";
+import { FaLinkedin, FaTwitterSquare } from "react-icons/fa";
+import { FaSquareFacebook, FaSquareInstagram } from "react-icons/fa6";
+import paymentPriceArr from "../../../Hooks/PaymentPrice/paymentPrice";
+import { useNavigate } from "react-router-dom";
+
 const HomePageCompo = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    e.target.reset();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log(formData);
+    e.target.reset();
+  };
+
+  //   handle subscribtion section
+  const handleSubscribtion = (price) => {
+    paymentPriceArr(price);
+    navigate("/joinAnHRManager");
+  };
+
   return (
     <div>
       {/* about sections */}
       <section className="font-Poppins">
-        {/* <div className=" w-full lg:w-[90%] lg:bg-base-200 rounded-lg shadow-2xl lg:p-5 px-5 py-4 text-blue-500 mx-auto mt-20 ">
-          <h1 className="text-5xl font-bold">
-            About AssetTrackr Asset Management
-          </h1>
-          <p className="py-6">
-            Welcome to XYZ Asset Management, your solution for streamlined asset
-            tracking and management. At XYZ, we understand the challenges faced
-            by HR managers in keeping track of company assets efficiently. Our
-            web application is designed to simplify this process, making it easy
-            for businesses of all sizes to manage their assets effectively. With
-            XYZ, HR managers can effortlessly track the usage and status of both
-            returnable and non-returnable assets, ensuring optimal utilization
-            and minimizing loss. Discover how XYZ can empower your business to
-            take control of its assets and streamline operations
-          </p>
-        </div> */}
-
         {/* about section */}
         <div className="bg-gray-100 py-16 px-8">
           <div className="max-w-6xl mx-auto">
-            <div>
-              <h2 className="text-3xl font-bold text-blue-600 mb-6">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-blue-600 mb-4">
                 About assetTrackr Asset Management
               </h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                Welcome to XYZ Asset Management, your solution for streamlined
-                asset tracking and management. At XYZ, we understand the
-                challenges faced by HR managers in keeping track of company
-                assets efficiently. Our web application is designed to simplify
-                this process, making it easy for businesses of all sizes to
-                manage their assets effectively. With XYZ, HR managers can
-                effortlessly track the usage and status of both returnable and
-                non-returnable assets, ensuring optimal utilization and
-                minimizing loss. Discover how XYZ can empower your business to
-                take control of its assets and streamline operations.
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Welcome to assetTrackr Asset Management, your solution for
+                streamlined asset tracking and management. At assetTrackr, we
+                understand the challenges faced by HR managers in keeping track
+                of company assets efficiently. Our web application is designed
+                to simplify this process, making it easy for businesses of all
+                sizes to manage their assets effectively. With assetTrackr, HR
+                managers can effortlessly track the usage and status of both
+                returnable and non-returnable assets, ensuring optimal
+                utilization and minimizing loss. Discover how assetTrackr can
+                empower your business to take control of its assets and
+                streamline operations.
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-8">
-              <div className="w-[40%] p-4 bg-white shadow-md rounded-lg">
-                <div className=" w-full h-[350px] mb-4 ">
-                  <img
-                    src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="Returnable Assets"
-                    className="mx-auto w-full h-full object-cover "
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-center items-center">
+                <img
+                  src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Returnable Assets"
+                  className="w-48 h-48 object-cover rounded-full mb-6"
+                />
+                <h3 className="text-2xl font-semibold text-gray-800 mb-2">
                   Returnable Assets
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-center">
                   Manage returnable assets like laptops, keyboards, chairs, and
                   more.
                 </p>
               </div>
-              <div className="w-[40%] p-4 bg-white shadow-md rounded-lg">
-                <div className=" w-full h-[350px] mb-4 ">
-                  <img
-                    src="https://plus.unsplash.com/premium_photo-1681488450591-9f09bfe97ac7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="Non-Returnable Assets"
-                    className="mx-auto w-full h-full object-cover mb-4"
-                  />
-                </div>
-
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-center items-center">
+                <img
+                  src="https://plus.unsplash.com/premium_photo-1681488450591-9f09bfe97ac7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Non-Returnable Assets"
+                  className="w-48 h-48 object-cover rounded-full mb-6"
+                />
+                <h3 className="text-2xl font-semibold text-gray-800 mb-2">
                   Non-Returnable Assets
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-center">
                   Track non-returnable assets like pens, paper, diaries, and
                   more.
                 </p>
@@ -77,268 +89,6 @@ const HomePageCompo = () => {
             </div>
           </div>
         </div>
-
-        {/* about section what we offers */}
-        {/* <section className="text-black">
-          <div className="container max-w-xl py-12 mx-auto space-y-24 lg:px-8 lg:max-w-7xl">
-            <div className="grid lg:gap-8 lg:grid-cols-2 lg:items-center">
-              <div>
-                <h3 className="text-2xl font-bold tracking-tight sm:text-3xl text-black">
-                  What We Offer
-                </h3>
-                <p className="mt-3 text-lg ">
-                  Our Asset Management System is a comprehensive platform that
-                  offers a range of features tailored to meet the needs of
-                  businesses of all sizes. Here’s what you can expect
-                </p>
-                <div className="mt-12 space-y-12">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leading-6 text-black">
-                        User-Friendly Interface
-                      </h4>
-                      <p className="mt-2 text-black">
-                        Our intuitive interface makes it easy for HR Managers
-                        and other users to navigate and manage assets without
-                        extensive training.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leading-6 text-black">
-                        Asset Tracking
-                      </h4>
-                      <p className="mt-2 text-black">
-                        Easily track and manage both returnable and
-                        non-returnable assets. Know exactly where each item is,
-                        who is using it, and when it is due for return or
-                        replacement.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leading-6 text-black">
-                        Detailed Reporting
-                      </h4>
-                      <p className="mt-2 text-black">
-                        Generate comprehensive reports to analyze asset usage
-                        patterns, identify potential issues, and make informed
-                        decisions.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-12 space-y-12">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leading-6 text-black">
-                        User-Friendly Interface
-                      </h4>
-                      <p className="mt-2 text-black">
-                        Our intuitive interface makes it easy for HR Managers
-                        and other users to navigate and manage assets without
-                        extensive training.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leading-6 text-black">
-                        Real-Time Updates
-                      </h4>
-                      <p className="mt-2 text-black">
-                        Get real-time updates on asset status and availability,
-                        ensuring that your inventory is always up-to-date.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leading-6 text-black">
-                        Detailed Reporting
-                      </h4>
-                      <p className="mt-2 text-black">
-                        Generate comprehensive reports to analyze asset usage
-                        patterns, identify potential issues, and make informed
-                        decisions.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div aria-hidden="true" className="mt-10 lg:mt-0">
-                <img
-                  src="https://source.unsplash.com/random/360x480"
-                  alt=""
-                  className="mx-auto rounded-lg shadow-lg bg-gray-500"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="grid lg:gap-8 lg:grid-cols-2 lg:items-center">
-                <div className="lg:col-start-2">
-                  <h3 className="text-2xl font-bold tracking-tight sm:text-3xl text-black">
-                    Customizable Alerts
-                  </h3>
-                  <p className="mt-3 text-lg text-black">
-                    Set up alerts and notifications for asset check-ins,
-                    check-outs, and maintenance schedules to keep everything
-                    running smoothly.
-                  </p>
-                  <div className="mt-12 space-y-12">
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-md bg-violet-400 text-gray-900">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="w-7 h-7"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M5 13l4 4L19 7"
-                            ></path>
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="ml-4">
-                        <h4 className="text-lg font-medium leading-6 text-black">
-                          Secure and Reliable
-                        </h4>
-                        <p className="mt-2 text-black">
-                          We prioritize the security of your data with robust
-                          measures to protect sensitive information and ensure
-                          reliable performance.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-10 lg:mt-0 lg:col-start-1 lg:row-start-1">
-                  <img
-                    src="https://source.unsplash.com/random/361x481"
-                    alt=""
-                    className="mx-auto rounded-lg shadow-lg bg-gray-500"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
       </section>
 
       {/* features section */}
@@ -465,7 +215,7 @@ const HomePageCompo = () => {
                 <li className="text-gray-700 mb-2">✓ User management</li>
                 <li className="text-gray-700">✓ Basic reports</li>
               </ul>
-              <button className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500">
+              <button onClick={() => handleSubscribtion(5)} className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500">
                 Choose Plan
               </button>
             </div>
@@ -484,7 +234,7 @@ const HomePageCompo = () => {
                 <li className="text-gray-700 mb-2">✓ Detailed reports</li>
                 <li className="text-gray-700">✓ Inventory management</li>
               </ul>
-              <button className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500">
+              <button onClick={() => handleSubscribtion(10)} className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500">
                 Choose Plan
               </button>
             </div>
@@ -504,7 +254,7 @@ const HomePageCompo = () => {
                 <li className="text-gray-700 mb-2">✓ Inventory management</li>
                 <li className="text-gray-700">✓ Priority support</li>
               </ul>
-              <button className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500">
+              <button onClick={() => handleSubscribtion(15)} className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500">
                 Choose Plan
               </button>
             </div>
@@ -584,6 +334,156 @@ const HomePageCompo = () => {
           </div>
         </div>
       </div>
+
+      {/* contack us section */}
+      <div className="bg-white py-20 px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-gray-800 mb-12">
+            Get in Touch
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block mb-1 text-left text-gray-700"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-left mb-1 text-gray-700"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="subject"
+                className="block text-left mb-1 text-gray-700"
+              >
+                Subject
+              </label>
+              <input
+                type="text"
+                name="subject"
+                id="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-left mb-1 text-gray-700"
+              >
+                Message
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg"
+                rows="5"
+                required
+              />
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500"
+              >
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* footer section */}
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h4 className="text-xl font-bold mb-4">Contact Us</h4>
+              <p>123 Street Name</p>
+              <p>City, State, ZIP</p>
+              <p>info@example.com</p>
+              <p>(123) 456-7890</p>
+            </div>
+            <div>
+              <h4 className="text-xl font-bold mb-4">Follow Us</h4>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-300 hover:text-white">
+                  <FaSquareFacebook className="text-3xl text-blue-500 "></FaSquareFacebook>
+                </a>
+                <a href="#" className="text-gray-300 hover:text-white">
+                  <FaTwitterSquare className="text-3xl text-green-500 "></FaTwitterSquare>
+                </a>
+                <a href="#" className="text-gray-300 hover:text-white">
+                  <FaSquareInstagram className="text-3xl"></FaSquareInstagram>
+                </a>
+                <a href="#" className="text-gray-300 hover:text-white">
+                  <FaLinkedin className="text-3xl"></FaLinkedin>
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-xl font-bold mb-4">Quick Links</h4>
+              <ul>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Contact Us
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <hr className="border-gray-700 my-8" />
+          <p className="text-center text-gray-400">
+            &copy; 2024 assetTrackr. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
